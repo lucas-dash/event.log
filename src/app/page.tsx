@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button";
+import Navbar from "@/components/navbar";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <h1 className="text-3xl">Mapbox</h1>
-      <Button variant="ghost">Hello World</Button>
-    </main>
+    <>
+      <Navbar vertical withoutMap />
+      <main className="min-h-screen grid place-items-center">
+        <h1 className="text-3xl">Mapbox</h1>
+      </main>
+    </>
   );
 }

@@ -3,7 +3,6 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import React from "react";
-import Navbar from "@/components/navbar";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -32,7 +31,6 @@ export default function RootLayout({
           roboto.className,
         )}
       >
-        <Navbar vertical />
         {children}
       </body>
     </html>
