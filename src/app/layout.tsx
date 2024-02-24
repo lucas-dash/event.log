@@ -12,7 +12,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: {
-    default: "Event Log",
+    default: "Event.log",
     template: "%s | Event Log",
   },
   description: "Find events near you",

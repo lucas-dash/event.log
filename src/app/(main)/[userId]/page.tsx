@@ -1,3 +1,4 @@
+import SignOut from "@/components/sign-out";
 import { getUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
 
@@ -18,5 +19,10 @@ export default async function UserId({ params: { userId } }: UserIdProps) {
     throw new Error(error.message);
   }
 
-  return <section>{`User: ${userId}`}</section>;
+  return (
+    <section>
+      {`User: ${userId}`}
+      <SignOut />
+    </section>
+  );
 }
