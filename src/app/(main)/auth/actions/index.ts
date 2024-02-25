@@ -14,7 +14,7 @@ export async function signUp(data: {
     email: data.email,
     password: data.password,
     options: {
-      emailRedirectTo: "http://localhost:3000/auth/verify-email",
+      emailRedirectTo: "http://localhost:3000/auth/confirm",
       data: {
         username: data.username,
         display_name: data.displayName,
@@ -34,6 +34,19 @@ export async function loginWithEmail(data: {
   const result = await supabase.auth.signInWithPassword({
     email: data.email,
     password: data.password,
+  });
+
+  return result;
+}
+
+export async function loginWithProvider(provider: "github" | "google") {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo: "http://localhost:3000/callback",
+    },
   });
 
   return result;

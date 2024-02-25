@@ -4,24 +4,20 @@ import { redirect } from "next/navigation";
 
 type UserIdProps = {
   params: {
-    userId: string;
+    username: string;
   };
 };
 
-export default async function UserId({ params: { userId } }: UserIdProps) {
-  const { user, error } = await getUser();
+export default async function UserId({ params: { username } }: UserIdProps) {
+  const { user } = await getUser();
 
   if (!user) {
     redirect("/auth/login");
   }
 
-  if (error) {
-    throw new Error(error.message);
-  }
-
   return (
     <section>
-      {`User: ${userId}`}
+      {`User: ${username}`}
       <SignOut />
     </section>
   );

@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTransition } from "react";
 import { Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
 import { signUp } from "../actions";
 
 export default function SignUpForm() {
@@ -39,13 +40,14 @@ export default function SignUpForm() {
       if (error) {
         throw new Error(error.message);
       }
+      redirect("/auth/verify-email");
     });
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4">
-        <div className="flex max-sm:flex-col max-sm:w-full sm:justify-between gap-3">
+        <div className="flex max-sm:flex-col max-sm:w-full sm:justify-between gap-4">
           <FormField
             control={form.control}
             name="username"
@@ -53,7 +55,11 @@ export default function SignUpForm() {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input
+                    placeholder="shadcn"
+                    autoComplete="username"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -67,7 +73,11 @@ export default function SignUpForm() {
               <FormItem>
                 <FormLabel>Display Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input
+                    placeholder="John Doe"
+                    autoComplete="name"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,7 +92,11 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel>E-mail</FormLabel>
               <FormControl>
-                <Input placeholder="name@email.com" {...field} />
+                <Input
+                  placeholder="name@email.com"
+                  autoComplete="email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,7 +110,12 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input
+                  type="password"
+                  placeholder="********"
+                  autoComplete="new-password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -110,7 +129,12 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input
+                  type="password"
+                  placeholder="********"
+                  autoComplete="new-password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

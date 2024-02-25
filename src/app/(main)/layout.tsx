@@ -7,12 +7,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div className="min-h-screen">
       <Header />
-
-      <main className="min-h-screen flex flex-col pt-[76px] w-full">
+      <main className="min-h-[calc(100vh-72px)] bg-fuchsia-500">
         {children}
       </main>
-    </>
+    </div>
   );
 }
