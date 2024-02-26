@@ -12,7 +12,7 @@ export default async function UserId({ params: { username } }: UserIdProps) {
   const { user } = await getUser();
 
   if (!user) {
-    redirect("/auth/login");
+    redirect("/auth");
   }
 
   return (

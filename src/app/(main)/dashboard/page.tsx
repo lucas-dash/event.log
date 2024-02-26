@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function Dashboard() {
   return (
-    <section className="h-full bg-green-500">
+    <section className="h-full">
       <h1>Dashboard</h1>
     </section>
   );
