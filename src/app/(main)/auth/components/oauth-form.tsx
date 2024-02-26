@@ -16,10 +16,10 @@ export default function OAuthForm() {
     <div className="flex flex-col gap-2 w-4/5">
       <div className="relative w-full">
         <div className="absolute inset-0 flex items-center w-full">
-          <span className="w-full border-t border-border" />
+          <span className="w-full border-t border-border dark:border-border-dark" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="px-2 bg-foreground text-copy-light">
+          <span className="px-2 bg-foreground dark:bg-foreground-dark text-copy-light dark:text-copy-light-dark">
             Or continue with
           </span>
         </div>

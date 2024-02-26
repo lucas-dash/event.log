@@ -47,7 +47,7 @@ export default function Navbar({ vertical, withoutMap }: NavbarProps) {
 
   return (
     <nav
-      className={`bg-foreground dark:bg-foreground-dark text-copy dark:text-copy-dark py-2 px-2 w-max rounded-2xl shadow-base dark:shadow-base-dark ${vertical && "absolute top-5 left-3"}`}
+      className={`bg-foreground dark:bg-secondary-light text-copy dark:text-copy-dark py-2 px-2 w-max rounded-2xl shadow-base dark:shadow-base-dark ${vertical && "absolute top-5 left-3"}`}
     >
       <ul className={`flex items-center gap-2 ${vertical && "flex-col"}`}>
         {filteredNavLinks.map(({ href, label, icon }) => {
