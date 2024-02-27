@@ -21,7 +21,7 @@ export default async function Login() {
 
   return (
     <section className="h-full flex items-center justify-center">
-      <article className="min-w-72 sm:w-4/5 max-w-[420px] mx-auto flex flex-col items-center gap-4 bg-foreground/80 dark:bg-foreground-dark/80 rounded-xl border border-border dark:border-border-dark p-5 shadow-base dark:shadow-base-dark">
+      <article className="min-w-72 min-[500px]:w-4/5 max-w-[420px] mx-auto flex flex-col items-center gap-4 bg-foreground/90 dark:bg-foreground-dark/90 rounded-xl border border-border dark:border-border-dark p-5 shadow-base dark:shadow-base-dark">
         <div>
           <Typography variant="h3" className="text-center">
             Welcome Back

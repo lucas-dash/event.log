@@ -3,7 +3,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function signUp(data: {
-  displayName: string;
   username: string;
   email: string;
   password: string;
@@ -17,7 +16,6 @@ export async function signUp(data: {
       emailRedirectTo: "http://localhost:3000/auth/confirm",
       data: {
         username: data.username,
-        display_name: data.displayName,
       },
     },
   });
@@ -39,18 +37,35 @@ export async function loginWithEmail(data: {
   return result;
 }
 
-export async function loginWithProvider(provider: "github" | "google") {
-  const supabase = createSupabaseServerClient();
+// export async function loginWithGoogleProvider() {
+//   const supabase = createSupabaseServerClient();
 
-  const result = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: "http://localhost:3000/callback",
-    },
-  });
+//   const result = await supabase.auth.signInWithOAuth({
+//     provider: "google",
+//     options: {
+//       redirectTo: "http://localhost:3000/auth/callback",
+//       queryParams: {
+//         access_type: "offline",
+//         prompt: "consent",
+//       },
+//     },
+//   });
 
-  return result;
-}
+//   return result;
+// }
+
+// export async function loginWithGithubProvider() {
+//   const supabase = createSupabaseServerClient();
+
+//   const result = await supabase.auth.signInWithOAuth({
+//     provider: "github",
+//     options: {
+//       redirectTo: "http://localhost:3000/auth/callback",
+//     },
+//   });
+
+//   return result;
+// }
 
 export async function signOut() {
   const supabase = createSupabaseServerClient();

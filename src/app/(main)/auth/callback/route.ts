@@ -11,9 +11,14 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = createSupabaseServerClient();
-    await supabase.auth.exchangeCodeForSession(code);
-  }
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
 
+    if (!error) {
+      return NextResponse.redirect(`${origin}/dashboard`);
+    }
+  }
+  // return the user to an error page with instructions
+  return NextResponse.redirect(`${origin}/auth-code-error`);
   // URL to redirect to after sign up process completes
-  return NextResponse.redirect(`${origin}/dashboard`);
+  // return NextResponse.redirect(`${origin}/dashboard`);
 }

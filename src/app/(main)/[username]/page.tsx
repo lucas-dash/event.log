@@ -15,6 +15,8 @@ export default async function UserId({ params: { username } }: UserIdProps) {
     redirect("/auth");
   }
 
+  // console.log(user);
+
   return (
     <section>
       {`User: ${username}`}

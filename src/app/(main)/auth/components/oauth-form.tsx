@@ -1,15 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { loginWithProvider } from "../actions";
+import { createSupabaseClient } from "@/lib/supabase/client";
 
 export default function OAuthForm() {
+  const supabase = createSupabaseClient();
+
   const handleGithubLogin = async () => {
-    await loginWithProvider("github");
+    // login with github
   };
 
   const handleGoogleLogin = async () => {
-    await loginWithProvider("google");
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: "http://localhost:3000/auth/callback",
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
   };
 
   return (
@@ -19,7 +30,7 @@ export default function OAuthForm() {
           <span className="w-full border-t border-border dark:border-border-dark" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="px-2 bg-foreground dark:bg-foreground-dark text-copy-light dark:text-copy-light-dark">
+          <span className="px-2 bg-foreground/80 dark:bg-foreground-dark text-copy-light dark:text-copy-light-dark rounded-full">
             Or continue with
           </span>
         </div>
