@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,30 +12,40 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/lib/validations/auth-validation";
-import { useTransition } from "react";
+import { eventSchema } from "@/lib/validations/event-validation";
 import { Loader2 } from "lucide-react";
-import { loginWithEmail } from "../actions";
+import { useTransition } from "react";
 
-export default function LoginForm() {
+export default function CreateEventForm() {
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.infer<typeof eventSchema>>({
+    resolver: zodResolver(eventSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      title: "",
+      description: "",
+      adress: "",
+      date: "",
+      time: "",
+      tickets_link: "",
+      homepage: "",
+      organizer: "",
+      price: 0,
+      schedule: "",
+      faq: "",
+      alerts: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  function onSubmit(values: z.infer<typeof eventSchema>) {
     startTransition(async () => {
-      const { error } = await loginWithEmail(values);
-
-      if (error) {
-        throw new Error(error.message);
-      }
+      console.log(values);
+      // const { error } = await loginWithEmail(values);
+      // if (error) {
+      //   throw new Error(error.message);
+      // }
     });
   }
 
@@ -45,13 +54,12 @@ export default function LoginForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
         <FormField
           control={form.control}
-          name="email"
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>E-mail</FormLabel>
               <FormControl>
                 <Input
-                  type="email"
                   placeholder="name@email.com"
                   autoComplete="email"
                   {...field}
@@ -61,24 +69,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input
-                  type="password"
-                  placeholder="********"
-                  autoComplete="current-password"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <Button type="submit" className="w-full">
           {isPending && <Loader2 className="animate-spin mr-1" />}
           Login

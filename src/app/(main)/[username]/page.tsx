@@ -1,6 +1,6 @@
-import SignOut from "@/components/sign-out";
 import { getUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
+import ProfileHeader from "./components/profile-header";
 
 type UserIdProps = {
   params: {
@@ -15,12 +15,9 @@ export default async function UserId({ params: { username } }: UserIdProps) {
     redirect("/auth");
   }
 
-  // console.log(user);
-
   return (
     <section>
-      {`User: ${username}`}
-      <SignOut />
+      <ProfileHeader username={username} />
     </section>
   );
 }

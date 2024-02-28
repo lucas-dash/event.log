@@ -2,6 +2,9 @@
 
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import { Typography } from "@/components/ui/typography";
 
 export default function Error({
   error,
@@ -16,13 +19,26 @@ export default function Error({
     console.error(error);
   }, [error]);
 
+  let rateError = "";
+  if (error.message === "Rate limit") {
+    rateError = "You have exceeded the rate limit. Please try again later.";
+  }
+
   return (
-    <section className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col gap-2 items-center">
-        <h2 className="text-3xl font-bold">Something went wrong!</h2>
-        <p>{error.message}</p>
-        <Button variant="default" onClick={() => reset()}>
-          Try again
+    <section className="min-h-screen flex flex-col gap-4 items-center justify-center">
+      <Image src="/error.svg" alt="Error image" width={300} height={300} />
+      <Typography variant="h2">Something went wrong!</Typography>
+      <Typography variant="muted" className="text-xl font-medium">
+        {rateError || error.message}
+      </Typography>
+      <div className="flex items-center gap-4">
+        {!rateError && (
+          <Button variant="default" onClick={() => reset()}>
+            Try again
+          </Button>
+        )}
+        <Button variant="secondary" asChild>
+          <Link href="/dashboard">Go Home</Link>
         </Button>
       </div>
     </section>

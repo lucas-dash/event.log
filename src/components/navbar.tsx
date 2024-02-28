@@ -5,42 +5,52 @@ import {
   LayoutGrid,
   MapPinned,
 } from "lucide-react";
+import { getUser, getUserProfileById } from "@/lib/actions";
 import NavLink from "./nav-link";
-
-const navLinks = [
-  {
-    href: "/dashboard",
-    label: "Dashboard",
-    icon: <LayoutGrid />,
-  },
-  {
-    href: "/events",
-    label: "Events",
-    icon: <CalendarDays />,
-  },
-  {
-    href: "/",
-    label: "Map",
-    icon: <MapPinned />,
-  },
-  {
-    href: "/favorites",
-    label: "Favorites",
-    icon: <Heart />,
-  },
-  {
-    href: "/profile",
-    label: "Profile",
-    icon: <CircleUser />,
-  },
-];
 
 type NavbarProps = {
   vertical?: boolean;
   withoutMap?: boolean;
 };
 
-export default function Navbar({ vertical, withoutMap }: NavbarProps) {
+export default async function Navbar({ vertical, withoutMap }: NavbarProps) {
+  const { user } = await getUser();
+  let userProfile = "auth";
+
+  if (user) {
+    const { data } = await getUserProfileById(user?.id);
+    if (data) {
+      userProfile = data?.username;
+    }
+  }
+  const navLinks = [
+    {
+      href: "/dashboard",
+      label: "Dashboard",
+      icon: <LayoutGrid />,
+    },
+    {
+      href: "/events",
+      label: "Events",
+      icon: <CalendarDays />,
+    },
+    {
+      href: "/",
+      label: "Map",
+      icon: <MapPinned />,
+    },
+    {
+      href: "/favorite",
+      label: "Favorite",
+      icon: <Heart />,
+    },
+    {
+      href: `/${userProfile}`,
+      label: "Profile",
+      icon: <CircleUser />,
+    },
+  ];
+
   const filteredNavLinks = withoutMap
     ? navLinks.filter((link) => link.label !== "Map")
     : navLinks;

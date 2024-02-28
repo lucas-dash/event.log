@@ -7,7 +7,12 @@ export default function OAuthForm() {
   const supabase = createSupabaseClient();
 
   const handleGithubLogin = async () => {
-    // login with github
+    await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: "http://localhost:3000/auth/callback",
+      },
+    });
   };
 
   const handleGoogleLogin = async () => {

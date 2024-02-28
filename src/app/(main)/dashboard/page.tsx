@@ -5,9 +5,9 @@ export const metadata: Metadata = {
   description: "Events overview",
 };
 
-export default function Dashboard() {
+export default async function Dashboard() {
   return (
-    <section className="h-full">
+    <section>
       <h1>Dashboard</h1>
     </section>
   );

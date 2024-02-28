@@ -2,6 +2,7 @@
 
 import { signOut } from "@/app/(main)/auth/actions";
 import { useRouter } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { Button } from "./ui/button";
 
 export default function SignOut() {
@@ -16,8 +17,13 @@ export default function SignOut() {
   };
 
   return (
-    <Button variant="destructive" onClick={handleSignOut}>
-      Sign Out
+    <Button
+      variant="destructive"
+      size="icon"
+      onClick={handleSignOut}
+      className="h-8 w-8"
+    >
+      <LogOut size={20} />
     </Button>
   );
 }

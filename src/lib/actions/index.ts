@@ -12,3 +12,27 @@ export async function getUser() {
 
   return { user, error };
 }
+
+export async function getUserProfileById(userId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("profile")
+    .select("*")
+    .eq("user_id", userId)
+    .single();
+
+  return result;
+}
+
+export async function getUserByUsername(username: string) {
+  const supabase = createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("profile")
+    .select()
+    .eq("username", username)
+    .single();
+
+  return { data, error };
+}

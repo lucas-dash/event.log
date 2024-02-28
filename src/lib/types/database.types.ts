@@ -12,7 +12,7 @@ export type Database = {
       event: {
         Row: {
           adress: string | null;
-          alert_flag: string | null;
+          alerts: string | null;
           coordinates: number[];
           cover: string | null;
           created_at: string;
@@ -32,7 +32,7 @@ export type Database = {
         };
         Insert: {
           adress?: string | null;
-          alert_flag?: string | null;
+          alerts?: string | null;
           coordinates?: number[];
           cover?: string | null;
           created_at?: string;
@@ -52,7 +52,7 @@ export type Database = {
         };
         Update: {
           adress?: string | null;
-          alert_flag?: string | null;
+          alerts?: string | null;
           coordinates?: number[];
           cover?: string | null;
           created_at?: string;
@@ -134,7 +134,6 @@ export type Database = {
         Row: {
           avatar_url: string | null;
           created_at: string;
-          display_name: string;
           email: string;
           user_id: string;
           username: string;
@@ -142,20 +141,26 @@ export type Database = {
         Insert: {
           avatar_url?: string | null;
           created_at?: string;
-          display_name: string;
           email: string;
-          user_id?: string;
+          user_id: string;
           username: string;
         };
         Update: {
           avatar_url?: string | null;
           created_at?: string;
-          display_name?: string;
           email?: string;
           user_id?: string;
           username?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "public_profile_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
       };
     };
     Views: {

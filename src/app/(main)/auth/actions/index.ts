@@ -16,6 +16,7 @@ export async function signUp(data: {
       emailRedirectTo: "http://localhost:3000/auth/confirm",
       data: {
         username: data.username,
+        display_name: data.username,
       },
     },
   });
@@ -36,36 +37,6 @@ export async function loginWithEmail(data: {
 
   return result;
 }
-
-// export async function loginWithGoogleProvider() {
-//   const supabase = createSupabaseServerClient();
-
-//   const result = await supabase.auth.signInWithOAuth({
-//     provider: "google",
-//     options: {
-//       redirectTo: "http://localhost:3000/auth/callback",
-//       queryParams: {
-//         access_type: "offline",
-//         prompt: "consent",
-//       },
-//     },
-//   });
-
-//   return result;
-// }
-
-// export async function loginWithGithubProvider() {
-//   const supabase = createSupabaseServerClient();
-
-//   const result = await supabase.auth.signInWithOAuth({
-//     provider: "github",
-//     options: {
-//       redirectTo: "http://localhost:3000/auth/callback",
-//     },
-//   });
-
-//   return result;
-// }
 
 export async function signOut() {
   const supabase = createSupabaseServerClient();

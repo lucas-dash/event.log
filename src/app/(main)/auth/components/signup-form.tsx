@@ -54,6 +54,7 @@ export default function SignUpForm() {
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input
+                  type="text"
                   placeholder="shadcn"
                   autoComplete="username"
                   {...field}
@@ -72,6 +73,7 @@ export default function SignUpForm() {
               <FormLabel>E-mail</FormLabel>
               <FormControl>
                 <Input
+                  type="email"
                   placeholder="name@email.com"
                   autoComplete="email"
                   {...field}
