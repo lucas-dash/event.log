@@ -11,7 +11,7 @@ export type Database = {
     Tables: {
       event: {
         Row: {
-          adress: string | null;
+          address: string | null;
           alerts: string | null;
           coordinates: number[];
           cover: string | null;
@@ -31,7 +31,7 @@ export type Database = {
           title: string;
         };
         Insert: {
-          adress?: string | null;
+          address?: string | null;
           alerts?: string | null;
           coordinates?: number[];
           cover?: string | null;
@@ -51,7 +51,7 @@ export type Database = {
           title: string;
         };
         Update: {
-          adress?: string | null;
+          address?: string | null;
           alerts?: string | null;
           coordinates?: number[];
           cover?: string | null;
