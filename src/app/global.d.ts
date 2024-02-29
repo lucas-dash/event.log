@@ -5,4 +5,5 @@ declare global {
   type Event = Database["public"]["Tables"]["event"]["Row"];
   type Favorite = Database["public"]["Tables"]["favorite"]["Row"];
   type Joined = Database["public"]["Tables"]["joined"]["Row"];
+  type Tags = Database["public"]["Tables"]["tags"]["Row"];
 }

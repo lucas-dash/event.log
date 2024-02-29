@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -10,7 +12,11 @@ export default async function Dashboard() {
   return (
     <section>
       <h1>Dashboard</h1>
-      <Link href="/create-event">Create event</Link>
+      <Button asChild size="icon" variant="secondary">
+        <Link href="/create-event">
+          <Plus />
+        </Link>
+      </Button>
     </section>
   );
 }

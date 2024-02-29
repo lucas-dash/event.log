@@ -12,12 +12,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { eventSchema } from "@/lib/validations/event-validation";
-import { Loader2 } from "lucide-react";
+import { AlertTriangle, Asterisk, CalendarIcon, Loader2 } from "lucide-react";
 import { useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { createEvent } from "../actions";
 
 export default function CreateEventForm() {
   const [isPending, startTransition] = useTransition();
@@ -28,27 +37,32 @@ export default function CreateEventForm() {
       title: "",
       description: "",
       address: "",
-      date: "",
+      date: undefined,
       time: "",
       tickets_link: "",
       homepage: "",
-      // organizer: "",
-      price: 0,
+      price: 1.0,
       schedule: "",
+      alerts: "",
       // faq: "",
-      // alerts: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof eventSchema>) {
     startTransition(async () => {
-      console.log(values);
-      // const { error } = await loginWithEmail(values);
-      // if (error) {
-      //   throw new Error(error.message);
-      // }
+      // console.log(values);
+      const { error } = await createEvent(values);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (!error) {
+        form.reset();
+      }
     });
   }
+
+  const disabledDays = [{ before: new Date() }];
 
   return (
     <Form {...form}>
@@ -58,7 +72,10 @@ export default function CreateEventForm() {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel className="flex">
+                Title
+                <Asterisk size={12} className="text-primary" />
+              </FormLabel>
               <FormControl>
                 <Input
                   type="text"
@@ -77,7 +94,10 @@ export default function CreateEventForm() {
           name="address"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Place</FormLabel>
+              <FormLabel className="flex">
+                Place
+                <Asterisk size={12} className="text-primary" />
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Select"
@@ -89,20 +109,50 @@ export default function CreateEventForm() {
             </FormItem>
           )}
         />
-        <div className="flex items-center gap-3 w-full justify-center">
+        <div className="flex items-center justify-center gap-4 w-full flex-wrap">
           <FormField
             control={form.control}
             name="date"
             render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Date</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Select"
-                    {...field}
-                    onChange={field.onChange}
-                  />
-                </FormControl>
+              <FormItem className="flex flex-col">
+                <FormLabel className="flex">
+                  Date
+                  <Asterisk size={12} className="text-primary" />
+                </FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "min-w-[240px] w-full pl-3 text-left font-normal bg-white dark:bg-secondary-light",
+                          !field.value && "text-copy dark:text-copy-dark",
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span className="text-copy-light dark:text-copy-light-dark">
+                            Pick a date
+                          </span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto p-0 rounded-xl"
+                    align="start"
+                  >
+                    <Calendar
+                      mode="single"
+                      className="dark:bg-secondary rounded-xl"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={disabledDays}
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -111,13 +161,41 @@ export default function CreateEventForm() {
             control={form.control}
             name="time"
             render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Time</FormLabel>
+              <FormItem className="w-max">
+                <FormLabel className="flex">
+                  Start <Asterisk size={12} className="text-primary" />
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Select"
+                    type="time"
                     {...field}
                     onChange={field.onChange}
+                    required
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem className="w-max">
+                <FormLabel className="flex">
+                  Price per ticket (USD)
+                  <Asterisk size={12} className="text-primary" />
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={1.0}
+                    step={0.01}
+                    placeholder="$19.99"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(Number(e.target.value));
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -131,7 +209,9 @@ export default function CreateEventForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel className="flex">
+                Description <Asterisk size={12} className="text-primary" />
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="About event"
@@ -145,27 +225,6 @@ export default function CreateEventForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price per ticket</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="$19.99"
-                  min={0}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(Number(e.target.value));
-                  }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="tickets_link"
@@ -218,11 +277,34 @@ export default function CreateEventForm() {
           name="schedule"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Schedule</FormLabel>
+              <FormLabel className="flex">
+                Schedule <Asterisk size={12} className="text-primary" />
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Start: 19:00..."
                   maxLength={500}
+                  {...field}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="alerts"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center gap-1">
+                <AlertTriangle size={16} />
+                Alert
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="No smoking..."
+                  maxLength={200}
                   {...field}
                   onChange={field.onChange}
                 />

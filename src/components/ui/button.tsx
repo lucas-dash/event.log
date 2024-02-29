@@ -18,7 +18,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-content hover:bg-secondary/80 dark:bg-secondary-dark dark:text-secondary-content dark:hover:bg-secondary-dark/80",
         ghost:
-          "hover:bg-slate-100 hover:text-copy dark:hover:bg-slate-800 dark:hover:text-copy-dark",
+          "hover:bg-slate-100 hover:text-copy dark:hover:bg-secondary-light dark:hover:text-copy-dark",
         link: "text-copy underline-offset-4 hover:underline dark:text-copy-dark",
         navlink:
           "bg-secondary-light text-secondary-content hover:bg-secondary-light hover:text-secondary-content dark:bg-secondary-dark dark:text-secondary-content dark:hover:bg-secondary-dark dark:hover:text-secondary-content",

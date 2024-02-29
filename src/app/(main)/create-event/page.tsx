@@ -8,7 +8,7 @@ export default function CreateEvent() {
       <Typography variant="h2" className="pl-11">
         Create Event
       </Typography>
-      <article className="bg-foreground dark:bg-foreground-dark rounded-2xl p-4 w-full sm:w-4/5 max-w-[820px] mx-auto">
+      <article className="bg-foreground dark:bg-foreground-dark rounded-2xl p-4 w-full sm:w-4/5 max-w-[820px] mx-auto space-y-4">
         <AddThumbnail />
         <CreateEventForm />
       </article>

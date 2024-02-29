@@ -23,7 +23,12 @@ export default function NavLink({
   const active = pathname === href;
 
   return (
-    <Button asChild variant={active ? "navlink" : "ghost"} size="icon">
+    <Button
+      asChild
+      variant={active ? "navlink" : "ghost"}
+      size="icon"
+      className={!active ? "dark:hover:bg-foreground-dark" : ""}
+    >
       <Link
         href={href}
         aria-label={label}

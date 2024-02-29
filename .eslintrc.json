@@ -26,6 +26,7 @@
     "no-shadow": "off",
     "quotes": ["error", "double", { "avoidEscape": true }],
     "@typescript-eslint/quotes": ["error", "double", { "avoidEscape": true }],
+    "import/no-extraneous-dependencies": "off",
     "react/require-default-props": [
       "off",
       {

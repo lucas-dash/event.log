@@ -162,6 +162,30 @@ export type Database = {
           },
         ];
       };
+      tags: {
+        Row: {
+          color: string;
+          created_at: string;
+          icon: string;
+          id: string;
+          title: string;
+        };
+        Insert: {
+          color: string;
+          created_at?: string;
+          icon: string;
+          id?: string;
+          title: string;
+        };
+        Update: {
+          color?: string;
+          created_at?: string;
+          icon?: string;
+          id?: string;
+          title?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
