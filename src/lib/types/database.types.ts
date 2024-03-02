@@ -24,7 +24,7 @@ export type Database = {
           homepage: string | null;
           price: number;
           schedule: string | null;
-          tag_id: string | null;
+          tags: string[];
           thumbnail: string | null;
           tickets_link: string | null;
           time: string;
@@ -44,7 +44,7 @@ export type Database = {
           homepage?: string | null;
           price: number;
           schedule?: string | null;
-          tag_id?: string | null;
+          tags?: string[];
           thumbnail?: string | null;
           tickets_link?: string | null;
           time: string;
@@ -64,21 +64,13 @@ export type Database = {
           homepage?: string | null;
           price?: number;
           schedule?: string | null;
-          tag_id?: string | null;
+          tags?: string[];
           thumbnail?: string | null;
           tickets_link?: string | null;
           time?: string;
           title?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "public_event_tag_id_fkey";
-            columns: ["tag_id"];
-            isOneToOne: false;
-            referencedRelation: "tags";
-            referencedColumns: ["tag_id"];
-          },
-        ];
+        Relationships: [];
       };
       favorite: {
         Row: {

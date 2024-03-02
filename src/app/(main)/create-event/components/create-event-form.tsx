@@ -22,23 +22,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { eventSchema } from "@/lib/validations/event-validation";
 import { AlertTriangle, Asterisk, CalendarIcon, Loader2 } from "lucide-react";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import SearchPlacesInput from "@/components/features/search-places-input";
+import { tags } from "@/lib/constants";
+import { Checkbox } from "@/components/ui/checkbox";
+import Tag from "@/components/tag";
 import { createEvent } from "../actions";
 
 export default function CreateEventForm() {
   const [isPending, startTransition] = useTransition();
+  const [coord, setCoord] = useState([0, 0]);
+  const [address, setAddress] = useState("");
 
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
       title: "",
       description: "",
-      address: "",
       date: undefined,
       time: "",
+      tags: [],
       tickets_link: "",
       homepage: "",
       price: 1.0,
@@ -51,18 +57,24 @@ export default function CreateEventForm() {
   function onSubmit(values: z.infer<typeof eventSchema>) {
     startTransition(async () => {
       // console.log(values);
-      const { error } = await createEvent(values);
+      const eventData = {
+        ...values,
+        address,
+        coordinates: coord,
+      };
+
+      const { error } = await createEvent(eventData);
       if (error) {
         throw new Error(error.message);
       }
 
       if (!error) {
+        setAddress("");
+        setCoord([0, 0]);
         form.reset();
       }
     });
   }
-
-  const disabledDays = [{ before: new Date() }];
 
   return (
     <Form {...form}>
@@ -89,26 +101,12 @@ export default function CreateEventForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex">
-                Place
-                <Asterisk size={12} className="text-primary" />
-              </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Select"
-                  {...field}
-                  onChange={field.onChange}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <SearchPlacesInput
+          setCoord={setCoord}
+          setAddress={setAddress}
+          address={address}
         />
+
         <div className="flex items-center justify-center gap-4 w-full flex-wrap">
           <FormField
             control={form.control}
@@ -149,7 +147,7 @@ export default function CreateEventForm() {
                       className="dark:bg-secondary rounded-xl"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={disabledDays}
+                      disabled={[{ before: new Date() }]}
                     />
                   </PopoverContent>
                 </Popover>
@@ -206,6 +204,61 @@ export default function CreateEventForm() {
 
         <FormField
           control={form.control}
+          name="tags"
+          render={() => (
+            <FormItem>
+              <div className="mb-4">
+                <FormLabel className="flex">
+                  Tags
+                  <Asterisk size={12} className="text-primary" />
+                </FormLabel>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                {tags.map((tag) => (
+                  <FormField
+                    key={tag.id}
+                    control={form.control}
+                    name="tags"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={tag.id}
+                          className="flex items-start space-x-2 space-y-0"
+                        >
+                          <FormControl>
+                            <Checkbox
+                              className="sr-only"
+                              checked={field.value?.includes(tag.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([...field.value, tag.id])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== tag.id,
+                                      ),
+                                    );
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel>
+                            <Tag
+                              {...tag}
+                              className={`${field.value.includes(tag.id) ? "bg-primary-dark dark:bg-primary-dark" : ""}`}
+                            />
+                          </FormLabel>
+                        </FormItem>
+                      );
+                    }}
+                  />
+                ))}
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="description"
           render={({ field }) => (
             <FormItem>
@@ -237,7 +290,6 @@ export default function CreateEventForm() {
                   placeholder="https://"
                   {...field}
                   value={field.value ?? ""}
-                  // onChange={field.onChange}
                   onChange={(e) => {
                     const value = e.target.value === "" ? null : e.target.value;
                     field.onChange(value);
@@ -260,7 +312,6 @@ export default function CreateEventForm() {
                   placeholder="https://"
                   {...field}
                   value={field.value ?? ""}
-                  // onChange={field.onChange}
                   onChange={(e) => {
                     const value = e.target.value === "" ? null : e.target.value;
                     field.onChange(value);

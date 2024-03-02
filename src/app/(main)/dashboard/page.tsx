@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Metadata } from "next";
@@ -18,7 +17,6 @@ export default async function Dashboard() {
           <Plus />
         </Link>
       </Button>
-      <Badge variant="secondary">Music</Badge>
     </section>
   );
 }
