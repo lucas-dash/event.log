@@ -43,8 +43,8 @@ const config = {
         "copy-lighter": "#928887",
         "copy-lighter-dark": "#aaa2a1",
 
-        badge: "#171717",
-        "badge-dark": "#fff",
+        badge: "#fff",
+        "badge-dark": "#202020",
 
         success: "#73F273",
         "success-dark": "#A2F6A2",

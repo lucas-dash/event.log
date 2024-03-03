@@ -213,7 +213,7 @@ export default function CreateEventForm() {
                   <Asterisk size={12} className="text-primary" />
                 </FormLabel>
               </div>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex gap-2 justify-center flex-wrap">
                 {tags.map((tag) => (
                   <FormField
                     key={tag.id}
@@ -221,10 +221,7 @@ export default function CreateEventForm() {
                     name="tags"
                     render={({ field }) => {
                       return (
-                        <FormItem
-                          key={tag.id}
-                          className="flex items-start space-x-2 space-y-0"
-                        >
+                        <FormItem key={tag.id}>
                           <FormControl>
                             <Checkbox
                               className="sr-only"
@@ -240,10 +237,10 @@ export default function CreateEventForm() {
                               }}
                             />
                           </FormControl>
-                          <FormLabel>
+                          <FormLabel className="cursor-pointer">
                             <Tag
                               {...tag}
-                              className={`${field.value.includes(tag.id) ? "bg-primary-dark dark:bg-primary-dark" : ""}`}
+                              className={`${field.value.includes(tag.id) ? "bg-primary-light dark:bg-primary-light" : ""}`}
                             />
                           </FormLabel>
                         </FormItem>

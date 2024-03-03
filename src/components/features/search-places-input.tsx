@@ -11,23 +11,13 @@ import {
   useState,
 } from "react";
 import { cn } from "@/lib/utils";
-import { Asterisk, MapPin } from "lucide-react";
+import { getSearchPlace } from "@/lib/get-search-place";
+import { useDebounce } from "@/lib/hooks/useDebounce";
+import { Asterisk, Loader2, MapPin } from "lucide-react";
+import { SearchPlaceType } from "@/lib/types/search-place";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-
-const places = [
-  {
-    id: 1,
-    title: "Suggest Address",
-    coordination: [10, 30],
-  },
-  {
-    id: 2,
-    title: "Suggesttino places",
-    coordination: [16, 90],
-  },
-];
 
 type Props = {
   setCoord: Dispatch<SetStateAction<number[]>>;
@@ -42,6 +32,30 @@ const SearchPlacesInput = forwardRef(
   ) => {
     const [suggest, setSuggest] = useState(false);
     const suggestRef = useRef<HTMLDivElement>(null);
+
+    const [places, setPlaces] = useState<SearchPlaceType | undefined>();
+    const [loading, setLoading] = useState(false);
+    const debounceSearch = useDebounce(address, 1000);
+
+    useEffect(() => {
+      const getPlaces = async (search_text: string) => {
+        setLoading(true);
+        if (search_text !== "") {
+          setSuggest(true);
+
+          const res: SearchPlaceType = await getSearchPlace(search_text);
+          // console.log(res);
+          setPlaces(res);
+
+          setLoading(false);
+        } else {
+          setLoading(false);
+          setPlaces(undefined);
+        }
+      };
+
+      getPlaces(debounceSearch);
+    }, [debounceSearch]);
 
     useEffect(() => {
       function handleClickOutside(event: MouseEvent) {
@@ -71,33 +85,39 @@ const SearchPlacesInput = forwardRef(
           autoComplete="street-address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          onFocus={() => setSuggest(true)}
           className={cn("w-full", className)}
           ref={ref}
           {...props}
         />
         <div
-          className={`absolute top-[60px] z-50 bg-background dark:bg-background-dark rounded-lg w-full border border-border dark:border-border-dark shadow-base p-2 ${suggest ? "flex" : "hidden"}  flex-col gap-2`}
+          className={`absolute top-[60px] z-50 bg-background dark:bg-background-dark rounded-lg w-full min-h-6 border border-border dark:border-border-dark shadow-base p-2 overflow-hidden ${suggest ? "flex" : "hidden"} flex-col gap-2`}
           ref={suggestRef}
         >
-          {places.map((place) => {
-            return (
-              <Button
-                className="justify-start"
-                type="button"
-                key={place.id}
-                variant="ghost"
-                onClick={() => {
-                  setCoord(place.coordination);
-                  setAddress(place.title);
-                  setSuggest(false);
-                }}
-              >
-                <MapPin size={16} className="mr-2" />
-                {place.title}
-              </Button>
-            );
-          })}
+          {loading && places ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            places?.features?.map((place) => {
+              return (
+                <Button
+                  className="flex justify-start w-full text-xs px-1.5"
+                  type="button"
+                  key={place.id}
+                  variant="ghost"
+                  onClick={() => {
+                    setCoord(place.geometry.coordinates);
+                    setAddress(place.place_name);
+                    setSuggest(false);
+                  }}
+                >
+                  <div className="flex">
+                    <MapPin size={16} className="mr-2" />
+                  </div>
+
+                  {place.place_name}
+                </Button>
+              );
+            })
+          )}
         </div>
       </div>
     );

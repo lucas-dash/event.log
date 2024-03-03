@@ -5,7 +5,7 @@ export type SearchPlaceType = {
   attribution: string;
 };
 
-type Features = {
+export type Features = {
   id: string;
   type: string;
   place_type: string;
@@ -19,7 +19,6 @@ type Features = {
   text: string;
   place_name: string;
   matching_place_name: string;
-  // bbox: number[];
   center: [number, number];
   geometry: {
     type: string;
@@ -28,8 +27,6 @@ type Features = {
   address: string;
   context: {
     id: string;
-    // short_code: string;
-    // wikidata: string;
     mapbox_id: string;
     text_en: string;
     text: string;

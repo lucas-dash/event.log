@@ -1,4 +1,10 @@
-import { Clapperboard, LucideIcon, Music } from "lucide-react";
+import {
+  Award,
+  Clapperboard,
+  LayoutDashboard,
+  LucideIcon,
+  Music,
+} from "lucide-react";
 
 export type TagType = {
   id: string;
@@ -19,5 +25,17 @@ export const tags: TagType[] = [
     title: "Film Festival",
     icon: Clapperboard,
     color: "#ED4B3A",
+  },
+  {
+    id: "tournament",
+    title: "Tournament",
+    icon: Award,
+    color: "#FFA500",
+  },
+  {
+    id: "other",
+    title: "Other",
+    icon: LayoutDashboard,
+    color: "#d1d5db",
   },
 ];
