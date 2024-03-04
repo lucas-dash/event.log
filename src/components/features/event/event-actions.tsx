@@ -1,29 +1,38 @@
-import { Button } from "@/components/ui/button";
-import { Heart, Plus } from "lucide-react";
+import { getUser } from "@/lib/actions";
+import FavoriteButton from "./favorite-button";
+import { getUserFavorite, getUserJoinedEvents } from "./actions";
+import JoinButton from "./join-button";
 
 type EventActionsProps = {
   event_id: string;
 };
-export default function EventActions({ event_id }: EventActionsProps) {
+export default async function EventActions({ event_id }: EventActionsProps) {
+  const { user } = await getUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const isFavorite = getUserFavorite(event_id, user.id);
+  const isJoined = getUserJoinedEvents(event_id, user.id);
+
+  const [favoriteResponse, joinedResponse] = await Promise.all([
+    isFavorite,
+    isJoined,
+  ]);
+
   return (
     <div className="flex flex-col gap-2">
-      <Button
-        size="icon"
-        variant="ghost"
-        className="rounded-full"
-        aria-label="Favorite"
-        aria-describedby="Add event to favorite"
-      >
-        <Heart />
-      </Button>
-      <Button
-        size="icon"
-        variant="outline"
-        className="rounded-full"
-        aria-label="Join Event"
-      >
-        <Plus />
-      </Button>
+      <FavoriteButton
+        event_id={event_id}
+        user_id={user.id}
+        favoriteRes={favoriteResponse}
+      />
+      <JoinButton
+        event_id={event_id}
+        user_id={user.id}
+        joinedRes={joinedResponse}
+      />
     </div>
   );
 }

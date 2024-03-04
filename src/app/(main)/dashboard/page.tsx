@@ -50,7 +50,7 @@ export default async function Dashboard() {
       </section>
 
       <EventSection label="Upcoming" events={data} />
-      <EventSection label="Around you" events={data} />
+      {/* <EventSection label="Around you" events={data} /> */}
     </section>
   );
 }
