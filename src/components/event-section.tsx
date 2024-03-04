@@ -7,8 +7,13 @@ import { Button } from "./ui/button";
 type EventSectionProps = {
   label: string;
   events: EventType[] | null;
+  userEvents?: boolean;
 };
-export default function EventSection({ label, events }: EventSectionProps) {
+export default function EventSection({
+  label,
+  events,
+  userEvents,
+}: EventSectionProps) {
   return (
     <section>
       <div className="flex justify-between items-center">
@@ -17,14 +22,16 @@ export default function EventSection({ label, events }: EventSectionProps) {
             {label}
           </Typography>
         </div>
-        <Button asChild size="icon" variant="ghost">
-          <Link
-            href={`/${label.toLowerCase()}`}
-            aria-label={`Show more ${label} events`}
-          >
-            <ArrowRight />
-          </Link>
-        </Button>
+        {!userEvents && (
+          <Button asChild size="icon" variant="ghost">
+            <Link
+              href={`/${label.toLowerCase()}`}
+              aria-label={`Show more ${label} events`}
+            >
+              <ArrowRight />
+            </Link>
+          </Button>
+        )}
       </div>
       <div className="grid min-[680px]:grid-cols-2 gap-3 pt-3">
         {events?.map((event) => <EventCard key={event.event_id} {...event} />)}

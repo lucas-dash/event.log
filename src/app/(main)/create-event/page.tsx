@@ -1,8 +1,16 @@
+import { getUser } from "@/lib/actions";
 import { Typography } from "@/components/ui/typography";
+import { redirect } from "next/navigation";
 import CreateEventForm from "./components/create-event-form";
 import AddThumbnail from "./components/add-thumbnail";
 
-export default function CreateEvent() {
+export default async function CreateEvent() {
+  const { user } = await getUser();
+
+  if (!user) {
+    redirect("/auth");
+  }
+
   return (
     <section className="my-8">
       <Typography variant="h2" className="pl-10">

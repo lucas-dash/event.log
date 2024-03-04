@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  CalendarPlus,
   LogOut,
   Moon,
   MoreVertical,
@@ -52,7 +53,7 @@ export default function ProfileActions({ username }: ProfileActionsProps) {
           aria-label="Profile Actions"
           className="h-8 w-8"
         >
-          <MoreVertical />
+          <MoreVertical size={24} />
         </Button>
       </DropdownMenuTrigger>
 
@@ -61,6 +62,12 @@ export default function ProfileActions({ username }: ProfileActionsProps) {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <Link href="/create-event" className="flex items-center w-full">
+              <CalendarPlus className="mr-2" size={18} />
+              <span>Create Event</span>
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
               href={`/${username}/setting`}

@@ -1,10 +1,8 @@
 import EventSection from "@/components/event-section";
 import Tag from "@/components/tag";
-import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { getEvents } from "@/lib/actions";
 import { tags } from "@/lib/constants";
-import { Plus } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -19,16 +17,8 @@ export default async function Dashboard() {
   return (
     <section className="flex flex-col gap-5 py-5">
       <section>
-        <div className="flex items-center justify-between">
-          <Typography variant="h2">For you</Typography>
-          <Button asChild size="icon" variant="ghost" className="rounded-full">
-            <Link href="/create-event">
-              <Plus />
-            </Link>
-          </Button>
-        </div>
-
-        <div />
+        <Typography variant="h2">For you</Typography>
+        <div>for you events</div>
       </section>
 
       <section className="h-full max-sm:overflow-x-scroll">
@@ -50,7 +40,7 @@ export default async function Dashboard() {
       </section>
 
       <EventSection label="Upcoming" events={data} />
-      {/* <EventSection label="Around you" events={data} /> */}
+      <EventSection label="Around you" events={data} />
     </section>
   );
 }

@@ -1,5 +1,9 @@
 import PageLoader from "@/components/loading/page-loader";
 
 export default function Loading() {
-  return <PageLoader />;
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <PageLoader />;
+    </div>
+  );
 }
