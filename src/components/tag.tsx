@@ -12,14 +12,19 @@ export default function Tag({
 }: TagType & HTMLAttributes<HTMLDivElement>) {
   const Icon = icon;
   return (
-    <Badge variant="tag" className={cn("text-sm", className)} {...props}>
+    <Badge
+      variant="tag"
+      className={cn("text-sm", className)}
+      {...props}
+      aria-label={`${title} tag`}
+    >
       <div
         className="rounded-full p-1.5 flex items-center justify-center"
         style={{ backgroundColor: `${color}` }}
       >
         <Icon size={20} />
       </div>
-      <p>{title}</p>
+      <p className="text-nowrap">{title}</p>
     </Badge>
   );
 }

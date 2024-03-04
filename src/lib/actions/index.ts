@@ -36,3 +36,11 @@ export async function getUserByUsername(username: string) {
 
   return { data, error };
 }
+
+export async function getEvents() {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase.from("event").select("*");
+
+  return result;
+}

@@ -32,6 +32,12 @@
       {
         "forbidDefaultForRequired": true
       }
+    ],
+    "no-undef": [
+      "off",
+      {
+        "typeof": false
+      }
     ]
   }
 }

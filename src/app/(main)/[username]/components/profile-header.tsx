@@ -1,9 +1,8 @@
-import SignOut from "@/components/sign-out";
 import { Typography } from "@/components/ui/typography";
 import { getUserByUsername } from "@/lib/actions";
-import { Settings, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import ProfileActions from "./profile-actions";
 
 type ProfileHeaderProps = {
   username: string;
@@ -21,27 +20,23 @@ export default async function ProfileHeader({ username }: ProfileHeaderProps) {
 
   return (
     <section className="w-4/5 mx-auto flex items-center justify-center flex-col gap-4">
-      <div className="w-52 h-52 rounded-full bg-foreground/60 dark:bg-foreground-dark/60 border-2 border-border flex items-center justify-center">
+      <div className="w-52 h-52 rounded-full bg-foreground/60 dark:bg-foreground-dark/60 border-2 border-border dark:border-border-dark flex items-center justify-center">
         {data.avatar_url ? (
           <Image
             src={data.avatar_url}
             alt={`${data.username} profile image`}
-            width={150}
-            height={150}
+            width={250}
+            height={250}
             loading="lazy"
+            className="rounded-full"
           />
         ) : (
           <UserRound size={28} className="w-20 h-20" />
         )}
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <Typography variant="h4">@{data?.username}</Typography>
-        <div className="flex items-center gap-2">
-          <Link href={`/${data.username}/setting`}>
-            <Settings size={24} />
-          </Link>
-          <SignOut />
-        </div>
+        <ProfileActions username={data.username} />
       </div>
     </section>
   );

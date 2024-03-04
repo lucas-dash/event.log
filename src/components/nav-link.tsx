@@ -31,12 +31,12 @@ export default function NavLink({
     >
       <Link
         href={href}
-        aria-label={label}
         aria-describedby={`link to ${label}`}
         className={cn(className, "")}
         {...props}
       >
         {icon}
+        <span className="sr-only">{label}</span>
       </Link>
     </Button>
   );

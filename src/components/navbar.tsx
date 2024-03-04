@@ -46,7 +46,7 @@ export default async function Navbar({ vertical, withoutMap }: NavbarProps) {
     },
     {
       href: `/${userProfile}`,
-      label: "Profile",
+      label: `${userProfile} profile`,
       icon: <CircleUser />,
     },
   ];
