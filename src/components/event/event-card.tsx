@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { CalendarClock, Image as ImageI, MapPin } from "lucide-react";
+import { CalendarClock, Image as ImageIcon, MapPin } from "lucide-react";
 import { tags as allTags } from "@/lib/constants";
 import { format } from "date-fns";
 import Link from "next/link";
-import { Typography } from "./ui/typography";
-import Tag from "./tag";
-import EventActions from "./features/event/event-actions";
+import { Typography } from "../ui/typography";
+import Tag from "../tag";
+import EventActions from "./event-actions";
 
 function EventCover({ cover, title }: { cover: string | null; title: string }) {
   return (
@@ -20,7 +20,7 @@ function EventCover({ cover, title }: { cover: string | null; title: string }) {
           className="object-cover w-full h-full rounded-xl"
         />
       ) : (
-        <ImageI size={32} />
+        <ImageIcon size={32} />
       )}
     </div>
   );
@@ -66,7 +66,7 @@ function EventContent({ title, address, date, tags }: EventContentProps) {
           </div>
         </div>
       </div>
-      <Link href={`events/${mainTag[0].id}`}>
+      <Link href={`events/${mainTag[0].id}`} className="w-max">
         <Tag {...mainTag[0]} />
       </Link>
     </div>

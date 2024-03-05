@@ -21,7 +21,7 @@ export default async function ProfileEvents({ user_id }: ProfileEventsProps) {
 
   return (
     <section className="py-8">
-      <EventSection label="Joined Events" events={userEvents} userEvents />
+      <EventSection label="Joined Events" events={userEvents} filter={false} />
     </section>
   );
 }

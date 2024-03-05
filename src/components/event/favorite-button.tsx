@@ -48,7 +48,7 @@ export default function FavoriteButton({
     <Button
       size="icon"
       variant="ghost"
-      className="rounded-full"
+      className="rounded-full max-md:h-8 max-md:w-8"
       aria-label="Favorite"
       aria-describedby="Add event to favorite"
       onClick={toggleFavorite}

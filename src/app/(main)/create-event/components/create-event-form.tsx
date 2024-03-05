@@ -26,7 +26,7 @@ import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import SearchPlacesInput from "@/components/features/search-places-input";
+import SearchPlacesInput from "@/components/search-places-input";
 import { tags } from "@/lib/constants";
 import { Checkbox } from "@/components/ui/checkbox";
 import Tag from "@/components/tag";

@@ -8,14 +8,14 @@ export default function Header() {
       <div className="w-12 h-12 bg-foreground rounded-full max-[320px]:hidden relative flex items-center justify-center">
         <Link
           href="/dashboard"
-          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:rounded-full focus-visible:ring-offset-2 ring-offset-white dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 overflow-hidden"
+          className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:rounded-2xl focus-visible:ring-offset-2 ring-offset-white dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300 overflow-hidden"
         >
           <Image
-            src="/event-logo.WEBP"
+            src="/event-log-icon.jpg"
             alt="Event log logo"
-            className="rounded-full"
-            width={80}
-            height={80}
+            className="rounded-2xl"
+            width={120}
+            height={120}
             priority
           />
           <span className="sr-only">Dashboard</span>

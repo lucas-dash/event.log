@@ -1,7 +1,6 @@
 import EventSection from "@/components/event-section";
 import Tag from "@/components/tag";
 import { Typography } from "@/components/ui/typography";
-import { getEvents } from "@/lib/actions";
 import { tags } from "@/lib/constants";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -12,8 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Dashboard() {
-  const { data } = await getEvents();
-
   return (
     <section className="flex flex-col gap-5 py-5">
       <section>
@@ -39,8 +36,8 @@ export default async function Dashboard() {
         </div>
       </section>
 
-      <EventSection label="Upcoming" events={data} />
-      <EventSection label="Around you" events={data} />
+      <EventSection label="Upcoming" filter link type="greaterThan" />
+      <EventSection label="Past events" filter type="lessThan" link />
     </section>
   );
 }

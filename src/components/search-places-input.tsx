@@ -15,9 +15,9 @@ import { getSearchPlace } from "@/lib/get-search-place";
 import { useDebounce } from "@/lib/hooks/useDebounce";
 import { Asterisk, Loader2, MapPin } from "lucide-react";
 import { SearchPlaceType } from "@/lib/types/search-place";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { Label } from "./ui/label";
 
 type Props = {
   setCoord: Dispatch<SetStateAction<number[]>>;

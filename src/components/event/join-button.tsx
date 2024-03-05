@@ -48,7 +48,7 @@ export default function JoinButton({
     <Button
       size="icon"
       variant="outline"
-      className="rounded-full"
+      className="rounded-full max-md:h-8 max-md:w-8"
       aria-label="Join Event"
       onClick={toggleJoinEvent}
     >
