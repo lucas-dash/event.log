@@ -47,14 +47,18 @@ export default function JoinButton({
   return (
     <Button
       size="icon"
-      variant="outline"
-      className="rounded-full max-md:h-8 max-md:w-8"
+      variant={`${joined ? "joined" : "outline"}`}
+      className="rounded-full max-md:h-8 max-md:w-8 group"
       aria-label="Join Event"
       onClick={toggleJoinEvent}
     >
       {isPending && <Loader2 className="animate-spin" />}
       <span className={`${isPending ? "hidden" : ""}`}>
-        {joined ? <Check /> : <Plus />}
+        {joined ? (
+          <Check className="group-hover:scale-75 transition-transform" />
+        ) : (
+          <Plus className="group-hover:scale-125 group-hover:rotate-90 transition-transform" />
+        )}
       </span>
     </Button>
   );

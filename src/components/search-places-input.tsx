@@ -20,7 +20,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 
 type Props = {
-  setCoord: Dispatch<SetStateAction<number[]>>;
+  setCoord: Dispatch<SetStateAction<[number, number]>>;
   address: string;
   setAddress: Dispatch<SetStateAction<string>>;
 } & HTMLAttributes<HTMLInputElement>;

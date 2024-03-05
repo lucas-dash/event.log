@@ -22,6 +22,8 @@ const buttonVariants = cva(
         link: "text-copy underline-offset-4 hover:underline dark:text-copy-dark",
         navlink:
           "bg-secondary-light text-secondary-content hover:bg-secondary-light hover:text-secondary-content dark:bg-secondary-dark dark:text-secondary-content dark:hover:bg-secondary-dark dark:hover:text-secondary-content",
+        joined:
+          "bg-success dark:bg-success-dark text-success-content hover:bg-success/80 dark:hover:bg-success-dark/80",
       },
       size: {
         default: "h-10 px-4 py-2",

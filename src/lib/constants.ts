@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   LucideIcon,
   Music,
+  Trophy,
 } from "lucide-react";
 
 export type TagType = {
@@ -29,13 +30,19 @@ export const tags: TagType[] = [
   {
     id: "tournament",
     title: "Tournament",
-    icon: Award,
+    icon: Trophy,
     color: "#FFA500",
   },
   {
     id: "other",
     title: "Other",
     icon: LayoutDashboard,
-    color: "#d1d5db",
+    color: "#a1a1aa",
+  },
+  {
+    id: "sport",
+    title: "Sport",
+    icon: Award,
+    color: "#4ade80",
   },
 ];

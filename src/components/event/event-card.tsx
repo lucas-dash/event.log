@@ -28,12 +28,13 @@ function EventCover({ cover, title }: { cover: string | null; title: string }) {
 
 type EventContentProps = {
   title: string;
-  address: string | null;
+  place: string | null;
   date: string;
+  time: string;
   tags: string[];
 };
 
-function EventContent({ title, address, date, tags }: EventContentProps) {
+function EventContent({ title, place, date, time, tags }: EventContentProps) {
   const mainTag = allTags?.filter((tag) => {
     return tag.id === tags[0];
   });
@@ -54,7 +55,7 @@ function EventContent({ title, address, date, tags }: EventContentProps) {
               variant="muted"
               className="max-lg:max-w-[15ch] max-lg:truncate"
             >
-              {address}
+              {place}
             </Typography>
           </div>
           <div className="flex items-center justify-center gap-1">
@@ -62,7 +63,15 @@ function EventContent({ title, address, date, tags }: EventContentProps) {
               size={20}
               className="text-copy-light dark:text-copy-light-dark"
             />
-            <Typography variant="muted">{format(date, "PP")}</Typography>
+            <Typography variant="muted">
+              {format(date, "PP")}
+              <Typography
+                variant="caption"
+                className="text-sm max-sm:hidden pl-1"
+              >
+                {time}
+              </Typography>
+            </Typography>
           </div>
         </div>
       </div>
@@ -76,17 +85,24 @@ function EventContent({ title, address, date, tags }: EventContentProps) {
 export default function EventCard({
   cover,
   title,
-  address,
   event_id,
   tags,
   date,
+  place,
+  time,
 }: EventType) {
   return (
-    <article className="min-w-[280px] w-full max-[380px]:p-1 p-2 bg-foreground dark:bg-foreground-dark rounded-xl flex gap-2 sm:gap-3">
+    <article className="min-w-[280px] w-full max-[380px]:p-1 p-2 bg-foreground dark:bg-foreground-dark rounded-xl flex gap-2 sm:gap-3 shadow-base dark:shadow-base-dark">
       <EventCover title={title} cover={cover} />
 
       <div className="flex justify-between w-full">
-        <EventContent address={address} title={title} date={date} tags={tags} />
+        <EventContent
+          place={place}
+          title={title}
+          date={date}
+          time={time}
+          tags={tags}
+        />
         <EventActions event_id={event_id} />
       </div>
     </article>

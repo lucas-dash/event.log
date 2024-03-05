@@ -11,7 +11,7 @@ export type Database = {
     Tables: {
       event: {
         Row: {
-          address: string | null;
+          address: string;
           alerts: string | null;
           coordinates: number[];
           cover: string | null;
@@ -20,18 +20,18 @@ export type Database = {
           date: string;
           description: string;
           event_id: string;
-          faq: string[] | null;
           homepage: string | null;
+          place: string;
           price: number;
+          price_from: boolean | null;
           schedule: string | null;
           tags: string[];
-          thumbnail: string | null;
           tickets_link: string | null;
           time: string;
           title: string;
         };
         Insert: {
-          address?: string | null;
+          address: string;
           alerts?: string | null;
           coordinates?: number[];
           cover?: string | null;
@@ -40,18 +40,18 @@ export type Database = {
           date: string;
           description: string;
           event_id?: string;
-          faq?: string[] | null;
           homepage?: string | null;
+          place?: string;
           price: number;
+          price_from?: boolean | null;
           schedule?: string | null;
           tags?: string[];
-          thumbnail?: string | null;
           tickets_link?: string | null;
           time: string;
           title: string;
         };
         Update: {
-          address?: string | null;
+          address?: string;
           alerts?: string | null;
           coordinates?: number[];
           cover?: string | null;
@@ -60,12 +60,12 @@ export type Database = {
           date?: string;
           description?: string;
           event_id?: string;
-          faq?: string[] | null;
           homepage?: string | null;
+          place?: string;
           price?: number;
+          price_from?: boolean | null;
           schedule?: string | null;
           tags?: string[];
-          thumbnail?: string | null;
           tickets_link?: string | null;
           time?: string;
           title?: string;

@@ -1,44 +1,54 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 "use server";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { eventSchema } from "@/lib/validations/event-validation";
 import { format } from "date-fns";
+import { TypeOf } from "zod";
 
 type FormDataType = {
+  data: TypeOf<typeof eventSchema>;
   address: string;
-  coordinates: number[];
-  date: Date;
-  description: string;
-  price: number;
-  schedule: string;
-  time: string;
-  tags: string[];
-  title: string;
-  tickets_link?: string | null | undefined;
-  homepage?: string | null | undefined;
-  alerts?: string | undefined;
+  coordinates: [number, number];
 };
 
-export async function createEvent(data: FormDataType) {
+export async function createEvent(values: FormDataType) {
   const supabase = createSupabaseServerClient();
+
+  const {
+    title,
+    date,
+    time,
+    description,
+    place,
+    price,
+    price_from,
+    tags,
+    schedule,
+    alerts,
+    homepage,
+    tickets_link,
+  } = values.data;
 
   const result = await supabase
     .from("event")
     .insert({
-      thumbnail: null,
       cover: null,
-      title: data.title,
-      date: format(data.date, "yyy-MM-dd"),
-      time: data.time,
-      address: data.address,
-      price: data.price,
-      description: data.description,
-      schedule: data.schedule,
-      alerts: data.alerts,
-      homepage: data.homepage,
-      tickets_link: data.tickets_link,
-      coordinates: data.coordinates,
-      tags: data.tags,
-      faq: null,
+      title,
+      date: format(date, "yyy-MM-dd"),
+      time,
+      address: values.address,
+      place,
+      price,
+      description,
+      schedule,
+      alerts,
+      homepage,
+      tickets_link,
+      coordinates: values.coordinates,
+      price_from,
+      tags,
     })
     .single();
 

@@ -7,6 +7,7 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -34,7 +35,7 @@ import { createEvent } from "../actions";
 
 export default function CreateEventForm() {
   const [isPending, startTransition] = useTransition();
-  const [coord, setCoord] = useState([0, 0]);
+  const [coord, setCoord] = useState<[number, number]>([0, 0]);
   const [address, setAddress] = useState("");
 
   const form = useForm<z.infer<typeof eventSchema>>({
@@ -44,13 +45,14 @@ export default function CreateEventForm() {
       description: "",
       date: undefined,
       time: "",
+      place: "",
       tags: [],
       tickets_link: "",
       homepage: "",
       price: 1.0,
+      price_from: false,
       schedule: "",
       alerts: "",
-      // faq: "",
     },
   });
 
@@ -58,7 +60,7 @@ export default function CreateEventForm() {
     startTransition(async () => {
       // console.log(values);
       const eventData = {
-        ...values,
+        data: values,
         address,
         coordinates: coord,
       };
@@ -84,7 +86,7 @@ export default function CreateEventForm() {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="flex">
+              <FormLabel className="flex py-[2px]">
                 Title
                 <Asterisk size={12} className="text-primary" />
               </FormLabel>
@@ -92,6 +94,28 @@ export default function CreateEventForm() {
                 <Input
                   type="text"
                   placeholder="Art Festival"
+                  {...field}
+                  onChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="place"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex py-[2px]">
+                Place
+                <Asterisk size={12} className="text-primary" />
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  placeholder="Madison Square Garden"
                   {...field}
                   onChange={field.onChange}
                 />
@@ -113,7 +137,7 @@ export default function CreateEventForm() {
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel className="flex">
+                <FormLabel className="flex py-[2px]">
                   Date
                   <Asterisk size={12} className="text-primary" />
                 </FormLabel>
@@ -160,7 +184,7 @@ export default function CreateEventForm() {
             name="time"
             render={({ field }) => (
               <FormItem className="w-max">
-                <FormLabel className="flex">
+                <FormLabel className="flex py-[2px]">
                   Start <Asterisk size={12} className="text-primary" />
                 </FormLabel>
                 <FormControl>
@@ -175,31 +199,53 @@ export default function CreateEventForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem className="w-max">
-                <FormLabel className="flex">
-                  Price per ticket (USD)
-                  <Asterisk size={12} className="text-primary" />
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    min={1.0}
-                    step={0.01}
-                    placeholder="$19.99"
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(Number(e.target.value));
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex max-sm:flex-col gap-2 max-sm:w-full items-center">
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="flex py-[2px]">
+                    Price per ticket (USD)
+                    <Asterisk size={12} className="text-primary" />
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      min={1.0}
+                      step={0.01}
+                      placeholder="$19.99"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(Number(e.target.value));
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="price_from"
+              render={({ field }) => {
+                return (
+                  <FormItem className="space-x-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel className="cursor-pointer">
+                      Price from?
+                    </FormLabel>
+                    <FormDescription>Do you have more prices?</FormDescription>
+                  </FormItem>
+                );
+              }}
+            />
+          </div>
         </div>
 
         <FormField
@@ -259,7 +305,7 @@ export default function CreateEventForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="flex">
+              <FormLabel className="flex py-[2px]">
                 Description <Asterisk size={12} className="text-primary" />
               </FormLabel>
               <FormControl>
@@ -268,6 +314,28 @@ export default function CreateEventForm() {
                   maxLength={300}
                   {...field}
                   onChange={field.onChange}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="schedule"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Schedule</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Start: 19:00..."
+                  maxLength={500}
+                  {...field}
+                  onChange={(e) => {
+                    const value = e.target.value === "" ? null : e.target.value;
+                    field.onChange(value);
+                  }}
                 />
               </FormControl>
               <FormMessage />
@@ -313,27 +381,6 @@ export default function CreateEventForm() {
                     const value = e.target.value === "" ? null : e.target.value;
                     field.onChange(value);
                   }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="schedule"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex">
-                Schedule <Asterisk size={12} className="text-primary" />
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Start: 19:00..."
-                  maxLength={500}
-                  {...field}
-                  onChange={field.onChange}
                 />
               </FormControl>
               <FormMessage />

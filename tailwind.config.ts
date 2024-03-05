@@ -44,7 +44,7 @@ const config = {
         "copy-lighter-dark": "#aaa2a1",
 
         badge: "#fff",
-        "badge-dark": "#202020",
+        "badge-dark": "#404040",
 
         success: "#73F273",
         "success-dark": "#A2F6A2",
@@ -55,8 +55,8 @@ const config = {
         "error-content": "#ffffff",
       },
       boxShadow: {
-        base: "0 7px 29px 0 rgba(100, 100, 111, 0.2)",
-        "base-dark": "0 10px 15px -3px rgba(99, 99, 110, 0.1)",
+        base: "0 7px 29px 0 rgba(100, 100, 111, 0.3)",
+        "base-dark": "0 10px 15px -3px rgba(18, 18, 18, 0.8)",
       },
       keyframes: {
         "accordion-down": {

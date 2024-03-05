@@ -87,12 +87,12 @@ export default async function EventSection({
           </Typography>
         </div>
         {link && (
-          <Button asChild size="icon" variant="ghost">
+          <Button asChild size="icon" variant="ghost" className="group">
             <Link
               href={`/${label.toLowerCase()}`}
               aria-label={`Show more ${label} events`}
             >
-              <ArrowRight />
+              <ArrowRight className="group-hover:animate-pulse" />
             </Link>
           </Button>
         )}

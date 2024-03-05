@@ -48,7 +48,7 @@ export default function FavoriteButton({
     <Button
       size="icon"
       variant="ghost"
-      className="rounded-full max-md:h-8 max-md:w-8"
+      className="rounded-full max-md:h-8 max-md:w-8 group"
       aria-label="Favorite"
       aria-describedby="Add event to favorite"
       onClick={toggleFavorite}
@@ -57,7 +57,7 @@ export default function FavoriteButton({
         <Loader2 className="animate-spin" />
       ) : (
         <Heart
-          className={`${favorite ? "fill-primary transition-colors" : ""}`}
+          className={`${favorite ? "fill-primary text-primary group-hover:animate-pulse" : "group-hover:scale-125 transition-transform"}`}
         />
       )}
     </Button>
