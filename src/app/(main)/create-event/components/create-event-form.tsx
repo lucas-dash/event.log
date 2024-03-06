@@ -50,7 +50,6 @@ export default function CreateEventForm() {
       price: 1.0,
       schedule: "",
       alerts: "",
-      // faq: "",
     },
   });
 

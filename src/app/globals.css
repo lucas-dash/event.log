@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.uppy-Dashboard-inner {
+  width: auto !important;
+  height: 15rem !important;
+  background-color: #333 !important;
+}
+
+.uppy-Dashboard-AddFiles-title {
+  color: #e0e0e0 !important;
+}

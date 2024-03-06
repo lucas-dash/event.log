@@ -3,19 +3,27 @@ import { CalendarClock, Image as ImageIcon, MapPin } from "lucide-react";
 import { tags as allTags } from "@/lib/constants";
 import { format } from "date-fns";
 import Link from "next/link";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Typography } from "../ui/typography";
 import Tag from "../tag";
 import EventActions from "./event-actions";
 
-function EventCover({ cover, title }: { cover: string | null; title: string }) {
+type EventCoverProps = {
+  title: string;
+  createdBy: string | null | undefined;
+  folder: string | null | undefined;
+  name: string | null | undefined;
+};
+
+function EventCover({ title, createdBy, folder, name }: EventCoverProps) {
   return (
     <div className="max-w-32 w-full min-w-[80px] aspect-square border-border dark:border-border-dark border rounded-lg overflow-hidden grid place-items-center">
-      {cover ? (
+      {createdBy ? (
         <Image
-          src={cover}
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/covers/${createdBy}/${folder}/${name}`}
           alt={`${title} event cover`}
-          width={130}
-          height={130}
+          width={150}
+          height={150}
           loading="lazy"
           className="object-cover w-full h-full rounded-xl"
         />
@@ -73,17 +81,35 @@ function EventContent({ title, address, date, tags }: EventContentProps) {
   );
 }
 
-export default function EventCard({
-  cover,
+export default async function EventCard({
+  cover_id,
   title,
   address,
   event_id,
   tags,
   date,
 }: EventType) {
+  const supabase = createSupabaseServerClient();
+  let cover: Covers | null = null;
+
+  if (cover_id) {
+    const { data } = await supabase
+      .from("covers")
+      .select("*")
+      .eq("cover_id", cover_id)
+      .single();
+
+    cover = data;
+  }
+
   return (
     <article className="min-w-[280px] w-full max-[380px]:p-1 p-2 bg-foreground dark:bg-foreground-dark rounded-xl flex gap-2 sm:gap-3">
-      <EventCover title={title} cover={cover} />
+      <EventCover
+        title={title}
+        createdBy={cover?.created_by}
+        folder={cover?.folder}
+        name={cover?.name}
+      />
 
       <div className="flex justify-between w-full">
         <EventContent address={address} title={title} date={date} tags={tags} />

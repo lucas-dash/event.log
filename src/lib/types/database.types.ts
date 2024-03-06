@@ -9,68 +9,118 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      covers: {
+        Row: {
+          cover_id: string;
+          created_at: string;
+          created_by: string | null;
+          folder: string | null;
+          name: string | null;
+          object_id: string;
+        };
+        Insert: {
+          cover_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          folder?: string | null;
+          name?: string | null;
+          object_id: string;
+        };
+        Update: {
+          cover_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          folder?: string | null;
+          name?: string | null;
+          object_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "public_covers_created_by_fkey";
+            columns: ["created_by"];
+            isOneToOne: false;
+            referencedRelation: "profile";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "public_covers_object_id_fkey";
+            columns: ["object_id"];
+            isOneToOne: false;
+            referencedRelation: "objects";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       event: {
         Row: {
-          address: string | null;
+          address: string;
           alerts: string | null;
           coordinates: number[];
-          cover: string | null;
+          cover_id: string | null;
           created_at: string;
           created_by: string;
           date: string;
           description: string;
           event_id: string;
-          faq: string[] | null;
           homepage: string | null;
+          place: string;
           price: number;
+          price_from: boolean | null;
           schedule: string | null;
           tags: string[];
-          thumbnail: string | null;
           tickets_link: string | null;
           time: string;
           title: string;
         };
         Insert: {
-          address?: string | null;
+          address: string;
           alerts?: string | null;
           coordinates?: number[];
-          cover?: string | null;
+          cover_id?: string | null;
           created_at?: string;
           created_by?: string;
           date: string;
           description: string;
           event_id?: string;
-          faq?: string[] | null;
           homepage?: string | null;
+          place?: string;
           price: number;
+          price_from?: boolean | null;
           schedule?: string | null;
           tags?: string[];
-          thumbnail?: string | null;
           tickets_link?: string | null;
           time: string;
           title: string;
         };
         Update: {
-          address?: string | null;
+          address?: string;
           alerts?: string | null;
           coordinates?: number[];
-          cover?: string | null;
+          cover_id?: string | null;
           created_at?: string;
           created_by?: string;
           date?: string;
           description?: string;
           event_id?: string;
-          faq?: string[] | null;
           homepage?: string | null;
+          place?: string;
           price?: number;
+          price_from?: boolean | null;
           schedule?: string | null;
           tags?: string[];
-          thumbnail?: string | null;
           tickets_link?: string | null;
           time?: string;
           title?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "public_event_cover_id_fkey";
+            columns: ["cover_id"];
+            isOneToOne: false;
+            referencedRelation: "covers";
+            referencedColumns: ["cover_id"];
+          },
+        ];
       };
       favorite: {
         Row: {
