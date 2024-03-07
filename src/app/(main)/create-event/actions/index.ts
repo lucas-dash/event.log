@@ -9,6 +9,7 @@ import { TypeOf } from "zod";
 
 type FormDataType = {
   data: TypeOf<typeof eventSchema>;
+  cover: string | null;
   address: string;
   coordinates: [number, number];
 };
@@ -34,7 +35,7 @@ export async function createEvent(values: FormDataType) {
   const result = await supabase
     .from("event")
     .insert({
-      cover: null,
+      cover_id: values.cover,
       title,
       date: format(date, "yyy-MM-dd"),
       time,

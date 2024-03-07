@@ -11,27 +11,24 @@ export type Database = {
     Tables: {
       covers: {
         Row: {
-          cover_id: string;
           created_at: string;
-          created_by: string | null;
-          folder: string | null;
-          name: string | null;
+          created_by: string;
+          id: string;
+          name: string;
           object_id: string;
         };
         Insert: {
-          cover_id?: string;
           created_at?: string;
-          created_by?: string | null;
-          folder?: string | null;
-          name?: string | null;
+          created_by: string;
+          id?: string;
+          name: string;
           object_id: string;
         };
         Update: {
-          cover_id?: string;
           created_at?: string;
-          created_by?: string | null;
-          folder?: string | null;
-          name?: string | null;
+          created_by?: string;
+          id?: string;
+          name?: string;
           object_id?: string;
         };
         Relationships: [
@@ -112,15 +109,7 @@ export type Database = {
           time?: string;
           title?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "public_event_cover_id_fkey";
-            columns: ["cover_id"];
-            isOneToOne: false;
-            referencedRelation: "covers";
-            referencedColumns: ["cover_id"];
-          },
-        ];
+        Relationships: [];
       };
       favorite: {
         Row: {

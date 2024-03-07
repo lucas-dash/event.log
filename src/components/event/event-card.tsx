@@ -11,16 +11,16 @@ import EventActions from "./event-actions";
 type EventCoverProps = {
   title: string;
   createdBy: string | null | undefined;
-  folder: string | null | undefined;
+  cover_id: string | null | undefined;
   name: string | null | undefined;
 };
 
-function EventCover({ title, createdBy, folder, name }: EventCoverProps) {
+function EventCover({ title, createdBy, cover_id, name }: EventCoverProps) {
   return (
     <div className="max-w-32 w-full min-w-[80px] aspect-square border-border dark:border-border-dark border rounded-lg overflow-hidden grid place-items-center">
       {createdBy ? (
         <Image
-          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/covers/${createdBy}/${folder}/${name}`}
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/covers/${createdBy}/${cover_id}/${name}`}
           alt={`${title} event cover`}
           width={150}
           height={150}
@@ -106,7 +106,7 @@ export default async function EventCard({
     const { data } = await supabase
       .from("covers")
       .select("*")
-      .eq("cover_id", cover_id)
+      .eq("id", cover_id)
       .single();
 
     cover = data;
@@ -117,7 +117,7 @@ export default async function EventCard({
       <EventCover
         title={title}
         createdBy={cover?.created_by}
-        folder={cover?.folder}
+        cover_id={cover?.id}
         name={cover?.name}
       />
 
