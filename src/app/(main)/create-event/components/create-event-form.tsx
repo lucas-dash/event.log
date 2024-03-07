@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { cn } from "@/lib/utils";
 
 import {
   Form,
@@ -24,11 +25,11 @@ import { eventSchema } from "@/lib/validations/event-validation";
 import { AlertTriangle, Asterisk, CalendarIcon, Loader2 } from "lucide-react";
 import { useState, useTransition } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
+
 import { format } from "date-fns";
 import SearchPlacesInput from "@/components/search-places-input";
 import { tags } from "@/lib/constants";
-import { Checkbox } from "@/components/ui/checkbox";
 import Tag from "@/components/tag";
 import { createEvent } from "../actions";
 

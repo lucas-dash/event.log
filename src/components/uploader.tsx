@@ -77,9 +77,11 @@ export default function Uploader({ avatar }: UploaderProps) {
   return (
     <div className="space-y-2">
       <Dashboard uppy={uppy} hideUploadButton />
-      <Button className="w-full" onClick={handleUploads}>
-        Upload Cover
-      </Button>
+      {avatar && (
+        <Button className="w-full" onClick={handleUploads}>
+          Upload Cover
+        </Button>
+      )}
     </div>
   );
 }
