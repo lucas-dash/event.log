@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { ThemeProvider } from "@/lib/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -43,6 +44,7 @@ export default function RootLayout({
             <div className="absolute -top-28 -left-52 bg-gradient-to-l to-[#D7E014] from-primary h-[420px] md:h-[480px] w-[420px] md:w-[480px] rounded-full -z-40 blur-3xl opacity-80" />
             <div className="absolute -bottom-28 -right-52 bg-[#D7E014] h-[420px] md:h-[480px] w-[420px] md:w-[480px] rounded-full -z-40 blur-3xl opacity-70 dark:opacity-50" />
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

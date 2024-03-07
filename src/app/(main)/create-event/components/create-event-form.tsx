@@ -34,6 +34,7 @@ import { eventSchema } from "@/lib/validations/event-validation";
 import { AlertTriangle, Asterisk, CalendarIcon, Loader2 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
 
 import { format } from "date-fns";
 import { tags } from "@/lib/constants";
@@ -134,6 +135,8 @@ export default function CreateEventForm({ userId }: { userId: string }) {
       }
 
       if (!error) {
+        toast("Event has been created.");
+
         setAddress("");
         setCoord([0, 0]);
         form.reset();
