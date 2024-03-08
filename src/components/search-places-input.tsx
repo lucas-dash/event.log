@@ -18,6 +18,7 @@ import { SearchPlaceType } from "@/lib/types/search-place";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
+import { FormDescription } from "./ui/form";
 
 type Props = {
   setCoord: Dispatch<SetStateAction<[number, number]>>;
@@ -89,6 +90,10 @@ const SearchPlacesInput = forwardRef(
           ref={ref}
           {...props}
         />
+
+        <FormDescription>
+          Select a location to view the event on the map
+        </FormDescription>
         <div
           className={`absolute top-[60px] z-50 bg-background dark:bg-background-dark rounded-lg w-full min-h-6 border border-border dark:border-border-dark shadow-base p-2 overflow-hidden ${suggest ? "flex" : "hidden"} flex-col gap-2`}
           ref={suggestRef}

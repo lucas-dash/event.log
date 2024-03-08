@@ -113,11 +113,11 @@ export default function CreateEventForm({ userId }: { userId: string }) {
     startTransition(async () => {
       const randomUUID = crypto.randomUUID();
 
-      const coverURL = uppy.getFiles().length === 0 ? null : randomUUID;
+      const coverFileID = uppy.getFiles().length === 0 ? null : randomUUID;
 
       const eventData = {
         data: values,
-        cover: coverURL,
+        cover: coverFileID,
         address,
         coordinates: coord,
       };
@@ -306,7 +306,7 @@ export default function CreateEventForm({ userId }: { userId: string }) {
                         />
                       </FormControl>
                       <FormLabel className="cursor-pointer">
-                        Price from?
+                        Starting price?
                       </FormLabel>
                       <FormDescription>
                         Do you have more prices?
@@ -356,7 +356,7 @@ export default function CreateEventForm({ userId }: { userId: string }) {
                             <FormLabel className="cursor-pointer">
                               <Tag
                                 {...tag}
-                                className={`${field.value.includes(tag.id) ? "bg-primary-light dark:bg-primary-light" : ""}`}
+                                className={`${field.value.includes(tag.id) ? "bg-primary-light dark:bg-primary-light hover:bg-primary-light/90 dark:hover:bg-primary-light/90" : ""}`}
                               />
                             </FormLabel>
                           </FormItem>
