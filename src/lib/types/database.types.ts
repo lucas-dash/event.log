@@ -62,7 +62,7 @@ export type Database = {
           homepage: string | null;
           place: string;
           price: number;
-          price_from: boolean | null;
+          price_from: boolean;
           schedule: string | null;
           tags: string[];
           tickets_link: string | null;
@@ -82,7 +82,7 @@ export type Database = {
           homepage?: string | null;
           place?: string;
           price: number;
-          price_from?: boolean | null;
+          price_from?: boolean;
           schedule?: string | null;
           tags?: string[];
           tickets_link?: string | null;
@@ -102,7 +102,7 @@ export type Database = {
           homepage?: string | null;
           place?: string;
           price?: number;
-          price_from?: boolean | null;
+          price_from?: boolean;
           schedule?: string | null;
           tags?: string[];
           tickets_link?: string | null;

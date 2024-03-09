@@ -8,14 +8,19 @@ import { Typography } from "../ui/typography";
 import Tag from "../tag";
 import EventActions from "./event-actions";
 
-type EventCoverProps = {
+type EventThumbnailProps = {
   title: string;
   createdBy: string | null | undefined;
   cover_id: string | null | undefined;
   name: string | null | undefined;
 };
 
-function EventCover({ title, createdBy, cover_id, name }: EventCoverProps) {
+function EventThumbnail({
+  title,
+  createdBy,
+  cover_id,
+  name,
+}: EventThumbnailProps) {
   return (
     <div className="max-w-32 w-full min-w-[80px] aspect-square border-border dark:border-border-dark border rounded-lg overflow-hidden grid place-items-center">
       {createdBy ? (
@@ -35,6 +40,7 @@ function EventCover({ title, createdBy, cover_id, name }: EventCoverProps) {
 }
 
 type EventContentProps = {
+  event_id: string;
   title: string;
   place: string | null;
   date: string;
@@ -42,7 +48,14 @@ type EventContentProps = {
   tags: string[];
 };
 
-function EventContent({ title, place, date, time, tags }: EventContentProps) {
+function EventContent({
+  event_id,
+  title,
+  place,
+  date,
+  time,
+  tags,
+}: EventContentProps) {
   const mainTag = allTags?.filter((tag) => {
     return tag.id === tags[0];
   });
@@ -50,7 +63,7 @@ function EventContent({ title, place, date, time, tags }: EventContentProps) {
   return (
     <div className="flex gap-2 flex-col">
       <div className="space-y-2">
-        <Link href={`/${title}`}>
+        <Link href={`/events/${event_id}`}>
           <Typography className="font-bold text-lg">{title}</Typography>
         </Link>
         <div className="flex flex-col items-start gap-2">
@@ -114,7 +127,7 @@ export default async function EventCard({
 
   return (
     <article className="min-w-[280px] w-full max-[380px]:p-1 p-2 bg-foreground dark:bg-foreground-dark rounded-xl flex gap-2 sm:gap-3">
-      <EventCover
+      <EventThumbnail
         title={title}
         createdBy={cover?.created_by}
         cover_id={cover?.id}
@@ -123,8 +136,9 @@ export default async function EventCard({
 
       <div className="flex justify-between w-full">
         <EventContent
-          place={place}
+          event_id={event_id}
           title={title}
+          place={place}
           date={date}
           time={time}
           tags={tags}

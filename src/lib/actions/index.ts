@@ -44,3 +44,26 @@ export async function getEvents() {
 
   return result;
 }
+
+export async function getEventById(eventId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("event")
+    .select("*")
+    .eq("event_id", eventId)
+    .single();
+
+  return result;
+}
+
+export async function getEventCoverById(coverId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("covers")
+    .select("*")
+    .eq("id", coverId)
+    .single();
+  return result;
+}

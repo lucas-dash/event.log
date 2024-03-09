@@ -14,12 +14,12 @@ const buttonVariants = cva(
         destructive:
           "bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-800 dark:text-slate-50 dark:hover:bg-red-800/90",
         outline:
-          "border border-border bg-white hover:bg-background hover:text-copy dark:border-border-dark dark:bg-secondary dark:hover:bg-secondary-light dark:hover:text-copy-dark",
+          "border border-border bg-background hover:bg-background hover:text-copy dark:border-border-dark dark:bg-background-dark dark:hover:bg-secondary-light dark:hover:text-copy-dark",
         secondary:
           "bg-secondary text-secondary-content hover:bg-secondary/80 dark:bg-secondary-dark dark:text-secondary-content dark:hover:bg-secondary-dark/80",
         ghost:
           "hover:bg-slate-100 hover:text-copy dark:hover:bg-secondary-light dark:hover:text-copy-dark",
-        link: "text-copy underline-offset-4 hover:underline dark:text-copy-dark",
+        link: "text-blue-500 underline-offset-4 hover:underline dark:text-blue-300",
         navlink:
           "bg-secondary-light text-secondary-content hover:bg-secondary-light hover:text-secondary-content dark:bg-secondary-dark dark:text-secondary-content dark:hover:bg-secondary-dark dark:hover:text-secondary-content",
         joined:
