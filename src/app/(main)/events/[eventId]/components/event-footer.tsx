@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { format } from "date-fns";
-import { Plus } from "lucide-react";
 import Link from "next/link";
 
 type EventFooterProps = {
@@ -16,8 +15,8 @@ export default function EventFooter({
 }: EventFooterProps) {
   return (
     <>
-      <div className="flex items-center gap-4 w-full flex-wrap justify-center pb-8">
-        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[150px] p-3">
+      <div className="flex items-center gap-4 w-full flex-wrap justify-center pb-8 px-2">
+        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[200px] p-3">
           <Typography className="text-secondary-content">Time</Typography>
           <Typography
             className="text-secondary-content text-xl font-bold [&:not(:first-child)]:mt-2"
@@ -28,7 +27,7 @@ export default function EventFooter({
           </Typography>
         </div>
 
-        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[150px] p-3">
+        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[200px] p-3">
           <Typography className="text-secondary-content">Date</Typography>
           <Typography
             className="text-secondary-content text-xl font-bold [&:not(:first-child)]:mt-2 break-words text-center"
@@ -41,12 +40,8 @@ export default function EventFooter({
       </div>
 
       <div className="w-full flex items-center flex-wrap justify-center gap-4">
-        <Button>
-          <Plus size={20} />
-          Join Event
-        </Button>
-        <Button asChild variant="outline">
-          <Link href={ticketsLink || ""}>
+        <Button asChild>
+          <Link href={ticketsLink || ""} target="_blank" rel="noreferrer">
             {ticketsLink ? "Get Tickets" : "Tickets on site"}
           </Link>
         </Button>

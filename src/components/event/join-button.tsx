@@ -57,7 +57,7 @@ export default function JoinButton({
         {joined ? (
           <Check className="group-hover:scale-75 transition-transform" />
         ) : (
-          <Plus className="group-hover:scale-125 group-hover:rotate-90 transition-transform" />
+          <Plus className="group-hover:scale-125 transition-transform" />
         )}
       </span>
     </Button>

@@ -30,7 +30,7 @@ function EventThumbnail({
           width={150}
           height={150}
           loading="lazy"
-          className="object-cover w-full h-full rounded-xl"
+          className="object-cover w-full h-full rounded-lg"
         />
       ) : (
         <ImageIcon size={32} />
@@ -88,7 +88,7 @@ function EventContent({
               {format(date, "PP")}
               <Typography
                 variant="caption"
-                className="text-sm max-sm:hidden pl-1"
+                className="text-sm max-sm:hidden pl-1 text-copy-light dark:text-copy-light-dark"
               >
                 {time}
               </Typography>

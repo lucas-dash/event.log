@@ -36,7 +36,7 @@ export default async function EventHeader({
     .eq("event_id", eventId);
 
   return (
-    <section className="p-3">
+    <section className="p-3 md:p-5">
       <section className="flex justify-between">
         <article className="flex flex-col gap-4">
           <header>
