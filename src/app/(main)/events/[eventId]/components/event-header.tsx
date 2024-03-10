@@ -73,7 +73,7 @@ export default async function EventHeader({
         <EventActions event_id={eventId} />
       </section>
 
-      <div className="px-4 pt-4 flex flex-col gap-3">
+      <div className="sm:px-4 pt-4 flex flex-col gap-3">
         <div>
           <Typography variant="h4">Description</Typography>
           <Typography variant="body" className="[&:not(:first-child)]:mt-2">

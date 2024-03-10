@@ -23,7 +23,7 @@ export default async function EventPage({
   const { user } = await getUser();
 
   return (
-    <article className="min-h-full flex flex-col bg-foreground dark:bg-foreground-dark rounded-3xl shadow-base dark:shadow-base-dark pb-8 relative">
+    <article className="max-w-[900px] mx-auto flex flex-col bg-foreground dark:bg-foreground-dark rounded-3xl shadow-base dark:shadow-base-dark pb-8 relative">
       <DeleteEvent eventId={event_id} createdBy={created_by} user={user} />
       <EventCover cover_id={cover_id} title={title} />
       <EventHeader

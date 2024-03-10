@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      minHeight: {
+        main: "calc(100vh - 72px)",
+      },
       colors: {
         primary: "#ed4b3a",
         "primary-content": "#ffffff",
