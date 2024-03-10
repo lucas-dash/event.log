@@ -1,3 +1,4 @@
+import EmptyState from "@/components/empty-state";
 import EventSection from "@/components/event-section";
 import { getEvents } from "@/lib/actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -11,6 +12,8 @@ export default async function ProfileEvents({ user_id }: ProfileEventsProps) {
     .from("joined")
     .select("event_id")
     .eq("user_id", user_id);
+
+  if (joined?.length === 0) return <EmptyState title="No events" />;
 
   const { data: events } = await getEvents();
 
