@@ -16,7 +16,7 @@ export default function EventFooter({
   return (
     <>
       <div className="flex items-center gap-4 w-full flex-wrap justify-center pb-8 px-2">
-        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[200px] p-3">
+        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[150px] p-3">
           <Typography className="text-secondary-content">Time</Typography>
           <Typography
             className="text-secondary-content text-xl font-bold [&:not(:first-child)]:mt-2"
@@ -27,14 +27,14 @@ export default function EventFooter({
           </Typography>
         </div>
 
-        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[200px] p-3">
+        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[150px] p-3">
           <Typography className="text-secondary-content">Date</Typography>
           <Typography
             className="text-secondary-content text-xl font-bold [&:not(:first-child)]:mt-2 break-words text-center"
             aria-label="Event Date"
-            aria-description={format(date, "PPP")}
+            aria-description={format(date, "PP")}
           >
-            {format(date, "PPP")}
+            {format(date, "PP")}
           </Typography>
         </div>
       </div>

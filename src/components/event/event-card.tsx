@@ -64,7 +64,9 @@ function EventContent({
     <div className="flex gap-2 flex-col">
       <div className="space-y-2">
         <Link href={`/events/${event_id}`}>
-          <Typography className="font-bold text-lg">{title}</Typography>
+          <Typography className="font-bold text-lg" aria-label={title}>
+            {title}
+          </Typography>
         </Link>
         <div className="flex flex-col items-start gap-2">
           <div className="flex items-start justify-center gap-1">
@@ -126,7 +128,7 @@ export default async function EventCard({
   }
 
   return (
-    <article className="min-w-[280px] w-full max-[380px]:p-1 p-2 bg-foreground dark:bg-foreground-dark rounded-xl flex gap-2 sm:gap-3">
+    <article className="min-w-[280px] w-full max-[380px]:p-1 p-2 bg-foreground dark:bg-foreground-dark rounded-xl flex gap-2 sm:gap-3 shadow-base dark:shadow-base-dark">
       <EventThumbnail
         title={title}
         createdBy={cover?.created_by}
@@ -134,7 +136,7 @@ export default async function EventCard({
         name={cover?.name}
       />
 
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between gap-1 w-full">
         <EventContent
           event_id={event_id}
           title={title}

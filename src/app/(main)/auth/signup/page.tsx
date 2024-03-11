@@ -21,7 +21,7 @@ export default async function SignUp() {
   }
 
   return (
-    <section className="min-h-[calc(100vh-72px)] flex items-center justify-center py-3">
+    <section className="min-h-main flex items-center justify-center py-3">
       <article className="min-w-72 w-4/5 max-w-[420px] mx-auto flex flex-col items-center gap-4 bg-foreground/90 dark:bg-foreground-dark/90 rounded-xl border border-border dark:border-border-dark p-4 sm:p-5 shadow-base dark:shadow-base-dark">
         <div>
           <Typography variant="h3" className="text-center">

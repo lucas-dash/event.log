@@ -21,7 +21,7 @@ export default async function UserProfile({
   }
 
   return (
-    <section>
+    <section className="py-10">
       <ProfileHeader username={username} />
       <ProfileEvents user_id={user.id} />
     </section>

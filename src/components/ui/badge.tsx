@@ -16,6 +16,8 @@ const badgeVariants = cva(
           "border-transparent bg-red-500 text-slate-50 hover:bg-red-500/80 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-800/80",
         outline: "text-slate-950 dark:text-slate-50",
         tag: "border-none bg-badge hover:bg-background text-copy dark:bg-badge-dark dark:hover:bg-secondary-light dark:text-copy-dark shadow-base dark:shadow-base-dark gap-2 py-1 px-2 text-base font-bold",
+        section:
+          "border-none bg-primary dark:bg-primary-dark text-primary-content text-base font-bold tracking-tight px-2 py-1",
       },
     },
     defaultVariants: {

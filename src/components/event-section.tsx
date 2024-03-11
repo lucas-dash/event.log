@@ -4,6 +4,7 @@ import Link from "next/link";
 import EventCard from "./event/event-card";
 import { Typography } from "./ui/typography";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
 
 type WithFilter = {
   filter: false;
@@ -81,11 +82,11 @@ export default async function EventSection({
   return (
     <section>
       <div className="flex justify-between items-center">
-        <div className="bg-primary dark:bg-primary-dark w-max rounded-full px-2 py-1 flex items-center justify-center">
-          <Typography variant="h4" className="text-primary-content">
+        <Badge variant="section">
+          <Typography variant="h3" className="text-lg text-primary-content">
             {label}
           </Typography>
-        </div>
+        </Badge>
         {link && (
           <Button asChild size="icon" variant="ghost" className="group">
             <Link
@@ -97,7 +98,7 @@ export default async function EventSection({
           </Button>
         )}
       </div>
-      <div className="grid min-[680px]:grid-cols-2 gap-3 pt-3">
+      <div className="grid md:grid-cols-2 gap-3 pt-3">
         {!props.filter
           ? props.events?.map((event) => (
               <EventCard key={event.event_id} {...event} />

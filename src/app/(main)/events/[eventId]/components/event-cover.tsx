@@ -23,7 +23,7 @@ export default async function EventCover({ cover_id, title }: EventCoverProps) {
         alt={`Cover for ${title}`}
         width={600}
         height={300}
-        className="object-cover rounded-2xl"
+        className="object-cover"
       />
     );
   }

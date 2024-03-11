@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AuthHome() {
   return (
-    <section className="min-h-[calc(100vh-72px)] flex flex-col items-center gap-12 justify-center ">
+    <section className="min-h-main flex flex-col items-center gap-12 justify-center ">
       <Typography variant="h1" className="text-center">
         Discover great events in your area
       </Typography>

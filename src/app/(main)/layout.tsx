@@ -9,7 +9,7 @@ export default function MainLayout({
   return (
     <>
       <Header />
-      <main className="min-h-main px-2 py-5 sm:container">{children}</main>
+      <main className="px-2 sm:container">{children}</main>
     </>
   );
 }
