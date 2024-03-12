@@ -16,3 +16,22 @@ export async function deleteEvent(eventId: string) {
 
   return result;
 }
+
+export async function deleteCover(
+  coverId: string,
+  createdBy: string,
+  coverName: string,
+) {
+  const supabase = createSupabaseServerClient();
+
+  const coversError = await supabase
+    .from("covers")
+    .delete()
+    .eq("id", coverId)
+    .single();
+  const storageError = await supabase.storage
+    .from("covers")
+    .remove([`${createdBy}/${coverId}/${coverName}`]);
+
+  return { coversError, storageError };
+}

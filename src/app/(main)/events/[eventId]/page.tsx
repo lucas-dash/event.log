@@ -38,7 +38,7 @@ export default async function EventId({ params: { eventId } }: EventIdProps) {
   }
 
   return (
-    <section>
+    <section className="py-5">
       <EventPage {...data} />
     </section>
   );

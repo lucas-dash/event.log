@@ -22,7 +22,7 @@ function EventThumbnail({
   name,
 }: EventThumbnailProps) {
   return (
-    <div className="max-w-32 w-full min-w-[80px] aspect-square border-border dark:border-border-dark border rounded-lg overflow-hidden grid place-items-center">
+    <div className="max-w-32 min-w-[80px] w-full border-border dark:border-border-dark border rounded-lg overflow-hidden flex items-center justify-center">
       {createdBy ? (
         <Image
           src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/covers/${createdBy}/${cover_id}/${name}`}

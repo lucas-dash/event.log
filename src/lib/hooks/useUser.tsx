@@ -17,7 +17,7 @@ export default function useUser() {
       if (!error) {
         setUserData(user);
       } else {
-        throw new Error(error.message);
+        setUserData(null);
       }
     };
 
