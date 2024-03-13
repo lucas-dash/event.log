@@ -2,6 +2,8 @@
 
 import { createSupabaseServerClient } from "../supabase/server";
 
+// User
+
 export async function getUser() {
   const supabase = createSupabaseServerClient();
 
@@ -12,6 +14,8 @@ export async function getUser() {
 
   return { user, error };
 }
+
+// Profile
 
 export async function getUserProfileById(userId: string) {
   const supabase = createSupabaseServerClient();
@@ -37,6 +41,8 @@ export async function getUserByUsername(username: string) {
   return { data, error };
 }
 
+// Events
+
 export async function getEvents() {
   const supabase = createSupabaseServerClient();
 
@@ -57,6 +63,8 @@ export async function getEventById(eventId: string) {
   return result;
 }
 
+// Covers
+
 export async function getEventCoverById(coverId: string) {
   const supabase = createSupabaseServerClient();
 
@@ -65,5 +73,29 @@ export async function getEventCoverById(coverId: string) {
     .select("*")
     .eq("id", coverId)
     .single();
+  return result;
+}
+
+// Favorites
+
+export async function getFavoriteEventsByUserId(userId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const { data: favorite, error: favoriteError } = await supabase
+    .from("favorite")
+    .select("event_id")
+    .eq("user_id", userId);
+
+  if (favoriteError) {
+    throw new Error(favoriteError.message);
+  }
+
+  const eventsId = favorite.map((fav) => fav.event_id);
+
+  const result = await supabase
+    .from("event")
+    .select("*")
+    .in("event_id", eventsId);
+
   return result;
 }

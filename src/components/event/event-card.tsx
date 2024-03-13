@@ -2,11 +2,11 @@ import Image from "next/image";
 import { CalendarClock, Image as ImageIcon, MapPin } from "lucide-react";
 import { tags as allTags } from "@/lib/constants";
 import { format } from "date-fns";
+import { getEventCoverById } from "@/lib/actions";
 import Link from "next/link";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Typography } from "../ui/typography";
-import Tag from "../tag";
 import EventActions from "./event-actions";
+import Tag from "../tag";
 
 type EventThumbnailProps = {
   title: string;
@@ -114,15 +114,10 @@ export default async function EventCard({
   place,
   time,
 }: EventType) {
-  const supabase = createSupabaseServerClient();
   let cover: Covers | null = null;
 
   if (cover_id) {
-    const { data } = await supabase
-      .from("covers")
-      .select("*")
-      .eq("id", cover_id)
-      .single();
+    const { data } = await getEventCoverById(cover_id);
 
     cover = data;
   }

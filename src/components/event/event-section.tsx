@@ -1,10 +1,10 @@
 import { ArrowRight } from "lucide-react";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import EventCard from "./event/event-card";
-import { Typography } from "./ui/typography";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
+import EventCard from "./event-card";
+import { Typography } from "../ui/typography";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 
 type WithFilter = {
   filter: false;

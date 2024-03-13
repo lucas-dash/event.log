@@ -1,8 +1,7 @@
-import EventSection from "@/components/event-section";
-import { getUser } from "@/lib/actions";
+import EventSection from "@/components/event/event-section";
+import { getFavoriteEventsByUserId, getUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import EmptyState from "@/components/empty-state";
-import { getUserAllFavoriteEvents } from "./actions";
 
 export default async function Favorite() {
   const { user } = await getUser();
@@ -11,7 +10,7 @@ export default async function Favorite() {
     redirect("/auth/login");
   }
 
-  const { data: favorite, error } = await getUserAllFavoriteEvents(user.id);
+  const { data: favorite, error } = await getFavoriteEventsByUserId(user.id);
 
   if (favorite?.length === 0)
     return (

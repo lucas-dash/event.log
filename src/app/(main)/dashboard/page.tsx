@@ -1,7 +1,8 @@
-import EventSection from "@/components/event-section";
+import EventSection from "@/components/event/event-section";
 import TagsRenderer from "@/components/tags-renderer";
 import { Typography } from "@/components/ui/typography";
 import { Metadata } from "next";
+import ForyouCarousel from "./components/foryou-carousel";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -11,12 +12,9 @@ export const metadata: Metadata = {
 export default async function Dashboard() {
   return (
     <section className="flex flex-col gap-5 py-5">
-      <section>
-        <Typography variant="h2">For you</Typography>
-        <div>for you events</div>
-      </section>
+      <ForyouCarousel />
 
-      <section className="h-full">
+      <section className="space-y-2">
         <Typography variant="h3">Discover</Typography>
         <TagsRenderer />
       </section>

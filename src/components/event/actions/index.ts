@@ -3,9 +3,12 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 // import { revalidatePath } from "next/cache";
 
-// favorite function
+// favorite
 
-export async function getUserFavorite(event_id: string, user_id: string) {
+export async function getSingleFavoriteEventById(
+  event_id: string,
+  user_id: string,
+) {
   const supabase = createSupabaseServerClient();
 
   const result = await supabase
@@ -41,7 +44,10 @@ export async function removeFavorite(event_id: string, user_id: string) {
 
 // join event function
 
-export async function getUserJoinedEvents(event_id: string, user_id: string) {
+export async function getSingleJoinedEventById(
+  event_id: string,
+  user_id: string,
+) {
   const supabase = createSupabaseServerClient();
 
   const result = await supabase

@@ -1,6 +1,9 @@
 import { getUser } from "@/lib/actions";
 import FavoriteButton from "./favorite-button";
-import { getUserFavorite, getUserJoinedEvents } from "./actions";
+import {
+  getSingleFavoriteEventById,
+  getSingleJoinedEventById,
+} from "./actions";
 import JoinButton from "./join-button";
 
 type EventActionsProps = {
@@ -13,8 +16,8 @@ export default async function EventActions({ event_id }: EventActionsProps) {
     return null;
   }
 
-  const isFavorite = getUserFavorite(event_id, user.id);
-  const isJoined = getUserJoinedEvents(event_id, user.id);
+  const isFavorite = getSingleFavoriteEventById(event_id, user.id);
+  const isJoined = getSingleJoinedEventById(event_id, user.id);
 
   const [favoriteResponse, joinedResponse] = await Promise.all([
     isFavorite,

@@ -1,5 +1,5 @@
 import EmptyState from "@/components/empty-state";
-import EventSection from "@/components/event-section";
+import EventSection from "@/components/event/event-section";
 import { getEvents } from "@/lib/actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
