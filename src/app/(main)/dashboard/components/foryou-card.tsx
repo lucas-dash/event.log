@@ -42,7 +42,7 @@ type ForyouContentProps = {
 };
 function ForyouContent({ title, date, time, place }: ForyouContentProps) {
   return (
-    <div className="absolute right-0 left-0 bottom-0 bg-foreground/90 dark:bg-foreground-dark/90 rounded-2xl p-2 min-h-[80px]">
+    <div className="absolute inset-x-0 bottom-0 bg-foreground/90 dark:bg-secondary-light/90 rounded-2xl p-2 min-h-[80px] group-hover:pb-7 transition-all">
       <Typography variant="h4" className="px-2 truncate">
         {title}
       </Typography>
@@ -96,7 +96,7 @@ export default function ForyouCard({
   title,
 }: ForyouCardProps) {
   return (
-    <article className="min-w-[300px] w-full max-w-[360px] min-h-[230px] h-full rounded-2xl relative overflow-hidden shadow-base dark:shadow-base-dark bg-badge dark:bg-secondary">
+    <article className="min-w-[290px] w-full min-h-[230px] h-full rounded-2xl relative overflow-hidden bg-slate-300 dark:bg-slate-700 group">
       <Link href={`/events/${event_id}`} className="h-max">
         <ForyouCover coverId={cover_id} title={title} />
         <ForyouContent title={title} date={date} time={time} place={place} />

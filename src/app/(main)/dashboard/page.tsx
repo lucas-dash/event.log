@@ -14,7 +14,7 @@ export default async function Dashboard() {
     <section className="flex flex-col gap-5 py-5">
       <ForyouCarousel />
 
-      <section className="space-y-2">
+      <section className="space-y-3 mb-5">
         <Typography variant="h3">Discover</Typography>
         <TagsRenderer />
       </section>

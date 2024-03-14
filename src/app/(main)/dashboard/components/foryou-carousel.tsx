@@ -1,6 +1,13 @@
 import { getUser } from "@/lib/actions";
 import { Typography } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { findSimilarEvents } from "../actions";
 import ForyouCard from "./foryou-card";
 
@@ -14,7 +21,7 @@ export default async function ForyouCarousel() {
   if (data?.length === 0 || error) return null;
 
   return (
-    <section className="space-y-2">
+    <section>
       <Badge variant="section">
         <Typography
           variant="h2"
@@ -23,11 +30,27 @@ export default async function ForyouCarousel() {
           For you
         </Typography>
       </Badge>
-      <section className="flex gap-5">
-        {data?.map((event) => {
-          return <ForyouCard key={event.event_id} {...event} />;
-        })}
-      </section>
+
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="w-full"
+      >
+        <CarouselContent className="py-4">
+          {data.map((event) => (
+            <CarouselItem
+              key={event.event_id}
+              className="min-[672px]:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+            >
+              <ForyouCard {...event} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious variant="outline" />
+        <CarouselNext variant="outline" />
+      </Carousel>
     </section>
   );
 }
