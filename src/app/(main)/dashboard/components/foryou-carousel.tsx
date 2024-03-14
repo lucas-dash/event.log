@@ -16,11 +16,14 @@ export default async function ForyouCarousel() {
   return (
     <section className="space-y-2">
       <Badge variant="section">
-        <Typography variant="h2" className="pb-0 px-2 text-primary-content">
+        <Typography
+          variant="h2"
+          className="pb-0 text-2xl px-2 text-primary-content"
+        >
           For you
         </Typography>
       </Badge>
-      <section className="flex gap-5 overflow-hidden">
+      <section className="flex gap-5">
         {data?.map((event) => {
           return <ForyouCard key={event.event_id} {...event} />;
         })}

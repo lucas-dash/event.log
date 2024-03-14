@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { getPopularEvents } from "@/app/(main)/dashboard/actions";
 import EventCard from "./event-card";
 import { Typography } from "../ui/typography";
 import { Button } from "../ui/button";
@@ -13,7 +14,7 @@ type WithFilter = {
 
 type WithoutFilter = {
   filter: true;
-  type: "greaterThan" | "lessThan" | "equal";
+  type: "greaterThan" | "lessThan" | "equal" | "popular";
   argument?: string;
   script?: string;
 };
@@ -31,21 +32,20 @@ async function eventsFilter(
   const supabase = createSupabaseServerClient();
 
   if (type === "greaterThan") {
-    return supabase
-      .from("event")
-      .select("*")
-      .gt(argument, script ?? new Date().toISOString())
-      .limit(4);
+    return supabase.from("event").select("*").gt(argument, script).limit(4);
   }
   if (type === "lessThan") {
     return supabase.from("event").select("*").lt(argument, script).limit(4);
   }
 
   if (type === "equal") {
-    return supabase.from("event").select("*").eq(argument, script);
+    return supabase.from("event").select("*").eq(argument, script).limit(4);
   }
 
-  return supabase.from("event").select("*");
+  if (type === "popular") {
+    return getPopularEvents();
+  }
+  return supabase.from("event").select("*").limit(4);
 }
 
 /**
@@ -70,9 +70,9 @@ export default async function EventSection({
   if (props.filter === true) {
     const { type, script, argument } = props;
 
-    const { data } = await eventsFilter(type, script, argument);
+    const { data, error } = await eventsFilter(type, script, argument);
 
-    if (data?.length === 0) return null;
+    if (data?.length === 0 || error) return null;
 
     if (data) {
       fetchEvents = data;

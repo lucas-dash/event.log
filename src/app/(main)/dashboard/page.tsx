@@ -19,6 +19,7 @@ export default async function Dashboard() {
         <TagsRenderer />
       </section>
 
+      <EventSection label="Popular" filter link type="popular" />
       <EventSection label="Upcoming" filter link type="greaterThan" />
       <EventSection label="Past events" filter type="lessThan" link />
     </section>
