@@ -41,8 +41,8 @@ export default function RootLayout({
         >
           {children}
           <div className="overflow-hidden absolute inset-0 -z-40">
-            <div className="absolute -top-28 -left-52 bg-gradient-to-l to-[#D7E014] from-primary h-[420px] md:h-[480px] w-[420px] md:w-[480px] rounded-full -z-40 blur-3xl opacity-80" />
-            <div className="absolute -bottom-28 -right-52 bg-[#D7E014] h-[420px] md:h-[480px] w-[420px] md:w-[480px] rounded-full -z-40 blur-3xl opacity-70 dark:opacity-50" />
+            <div className="absolute -top-36 -left-64 bg-gradient-to-tr to-[#9222e8] dark:to-[#8622d3] from-primary h-[420px] md:h-[480px] w-[420px] md:w-[480px] rounded-full -z-40 blur-3xl opacity-80" />
+            <div className="absolute -bottom-36 -right-64 bg-gradient-to-tl from-[#D7E014] to-primary h-[420px] md:h-[480px] w-[420px] md:w-[480px] rounded-full -z-40 blur-3xl opacity-70 dark:opacity-50" />
           </div>
           <Toaster />
         </ThemeProvider>
