@@ -1,9 +1,5 @@
 import { getUser } from "@/lib/actions";
 import FavoriteButton from "./favorite-button";
-import {
-  getSingleFavoriteEventById,
-  getSingleJoinedEventById,
-} from "./actions";
 import JoinButton from "./join-button";
 
 type EventActionsProps = {
@@ -12,30 +8,12 @@ type EventActionsProps = {
 export default async function EventActions({ event_id }: EventActionsProps) {
   const { user } = await getUser();
 
-  if (!user) {
-    return null;
-  }
-
-  const isFavorite = getSingleFavoriteEventById(event_id, user.id);
-  const isJoined = getSingleJoinedEventById(event_id, user.id);
-
-  const [favoriteResponse, joinedResponse] = await Promise.all([
-    isFavorite,
-    isJoined,
-  ]);
+  if (!user) return null;
 
   return (
     <div className="flex flex-col gap-2">
-      <FavoriteButton
-        event_id={event_id}
-        user_id={user.id}
-        favoriteRes={favoriteResponse}
-      />
-      <JoinButton
-        event_id={event_id}
-        user_id={user.id}
-        joinedRes={joinedResponse}
-      />
+      <FavoriteButton eventId={event_id} userId={user.id} />
+      <JoinButton eventId={event_id} userId={user.id} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import FavoriteButton from "@/components/event/favorite-button";
 import { Typography } from "@/components/ui/typography";
 import { getEventCoverById } from "@/lib/actions";
 import { format } from "date-fns";
@@ -23,7 +24,7 @@ async function ForyouCover({ coverId, title }: ForyouCoverProps) {
           alt={`${title} event cover`}
           fill
           loading="lazy"
-          className="object-cover w-full h-full rounded-lg"
+          className="object-cover w-full h-full rounded-lg group-hover:scale-110 duration-300 transition-transform"
         />
       ) : (
         <div className="flex items-center justify-center min-h-[190px]">
@@ -42,7 +43,7 @@ type ForyouContentProps = {
 };
 function ForyouContent({ title, date, time, place }: ForyouContentProps) {
   return (
-    <div className="absolute inset-x-0 bottom-0 bg-foreground/90 dark:bg-secondary-light/90 rounded-2xl p-2 min-h-[80px] group-hover:pb-7 transition-all">
+    <div className="absolute inset-x-0 bottom-0 bg-foreground/90 dark:bg-secondary-light/90 rounded-2xl p-2 min-h-[80px] group-hover:pb-7 duration-200 transition-all">
       <Typography variant="h4" className="px-2 truncate">
         {title}
       </Typography>
@@ -86,6 +87,7 @@ type ForyouCardProps = {
   title: string;
   event_id: string;
   cover_id: string | null;
+  userId: string;
 };
 export default function ForyouCard({
   cover_id,
@@ -94,10 +96,17 @@ export default function ForyouCard({
   place,
   time,
   title,
+  userId,
 }: ForyouCardProps) {
   return (
     <article className="min-w-[290px] w-full min-h-[230px] h-full rounded-2xl relative overflow-hidden bg-slate-300 dark:bg-slate-700 group">
-      <Link href={`/events/${event_id}`} className="h-max">
+      <FavoriteButton
+        eventId={event_id}
+        userId={userId}
+        className="absolute top-2 right-2 z-50 dark:bg-secondary-light dark:hover:bg-secondary-light/80"
+        variant="outline"
+      />
+      <Link href={`/events/${event_id}`}>
         <ForyouCover coverId={cover_id} title={title} />
         <ForyouContent title={title} date={date} time={time} place={place} />
       </Link>

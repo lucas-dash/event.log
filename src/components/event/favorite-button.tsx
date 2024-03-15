@@ -1,40 +1,35 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Heart, Loader2 } from "lucide-react";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { useState, useTransition } from "react";
-import { addFavorite, removeFavorite } from "./actions";
+import { isUserFavorite, addFavorite, removeFavorite } from "@/lib/actions";
+import { useEffect, useState, useTransition } from "react";
 
 type FavoriteButtonProps = {
-  event_id: string;
-  user_id: string;
-  favoriteRes: PostgrestSingleResponse<{
-    event_id: string;
-    user_id: string;
-  }>;
-};
+  eventId: string;
+  userId: string;
+} & React.ComponentProps<typeof Button>;
 export default function FavoriteButton({
-  event_id,
-  favoriteRes,
-  user_id,
+  eventId,
+  userId,
+  className,
+  variant,
 }: FavoriteButtonProps) {
-  const { data: isFavorite } = favoriteRes;
-
-  const [favorite, setFavorite] = useState(Boolean(isFavorite));
+  const [favorite, setFavorite] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const toggleFavorite = () => {
     startTransition(async () => {
       if (favorite) {
-        const { error } = await removeFavorite(event_id, user_id);
+        const { error } = await removeFavorite(eventId, userId);
         if (error) {
           throw new Error(error?.message);
         } else {
           setFavorite(false);
         }
       } else if (!favorite) {
-        const { error } = await addFavorite(event_id);
+        const { error } = await addFavorite(eventId);
         if (error) {
           throw new Error(error?.message);
         } else {
@@ -44,20 +39,38 @@ export default function FavoriteButton({
     });
   };
 
+  useEffect(() => {
+    const checkIsFavorite = async () => {
+      if (!userId) return;
+
+      const { data } = await isUserFavorite(eventId, userId);
+      if (data) {
+        setFavorite(true);
+      } else {
+        setFavorite(false);
+      }
+    };
+    checkIsFavorite();
+  }, [eventId, userId]);
+
+  if (!userId) return null;
+
   return (
     <Button
       size="icon"
-      variant="ghost"
-      className="rounded-full max-md:h-8 max-md:w-8 group"
+      variant={variant || "ghost"}
+      className={cn("rounded-full max-md:h-8 max-md:w-8 group/fav ", className)}
       aria-label="Favorite"
-      aria-describedby="Add event to favorite"
+      aria-describedby="Save event to favorite"
       onClick={toggleFavorite}
+      disabled={isPending}
+      aria-disabled={isPending}
     >
       {isPending ? (
         <Loader2 className="animate-spin" />
       ) : (
         <Heart
-          className={`${favorite ? "fill-primary text-primary group-hover:animate-pulse" : "group-hover:scale-125 transition-transform"}`}
+          className={`group-hover/fav:scale-110 transition-transform ${favorite ? "fill-primary text-primary" : ""}`}
         />
       )}
     </Button>

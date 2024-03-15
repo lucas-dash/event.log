@@ -1,40 +1,29 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Check, Loader2, Plus } from "lucide-react";
-import { useState, useTransition } from "react";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { disconnectFromEvent, joinEvent } from "./actions";
+import { disconnectFromEvent, isJoinedByUser, joinEvent } from "@/lib/actions";
+import { CalendarCheck, CalendarPlus, Loader2 } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
 
 type JoinButtonProps = {
-  event_id: string;
-  user_id: string;
-  joinedRes: PostgrestSingleResponse<{
-    event_id: string;
-    user_id: string;
-  }>;
+  eventId: string;
+  userId: string;
 };
-export default function JoinButton({
-  event_id,
-  user_id,
-  joinedRes,
-}: JoinButtonProps) {
-  const { data: isJoined } = joinedRes;
-
-  const [joined, setJoined] = useState(Boolean(isJoined));
+export default function JoinButton({ eventId, userId }: JoinButtonProps) {
+  const [joined, setJoined] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const toggleJoinEvent = () => {
     startTransition(async () => {
       if (joined) {
-        const { error } = await disconnectFromEvent(event_id, user_id);
+        const { error } = await disconnectFromEvent(eventId, userId);
         if (error) {
           throw new Error(error?.message);
         } else {
           setJoined(false);
         }
       } else if (!joined) {
-        const { error } = await joinEvent(event_id);
+        const { error } = await joinEvent(eventId);
         if (error) {
           throw new Error(error?.message);
         } else {
@@ -44,21 +33,34 @@ export default function JoinButton({
     });
   };
 
+  useEffect(() => {
+    const checkIsJoined = async () => {
+      if (!userId) return;
+      const { data } = await isJoinedByUser(eventId, userId);
+      if (data) {
+        setJoined(true);
+      } else {
+        setJoined(false);
+      }
+    };
+    checkIsJoined();
+  }, [eventId, userId]);
+
+  if (!userId) return null;
+
   return (
     <Button
       size="icon"
       variant={`${joined ? "joined" : "outline"}`}
-      className="rounded-full max-md:h-8 max-md:w-8 group"
+      className="rounded-full max-md:h-8 max-md:w-8"
       aria-label="Join Event"
       onClick={toggleJoinEvent}
+      disabled={isPending}
+      aria-disabled={isPending}
     >
       {isPending && <Loader2 className="animate-spin" />}
       <span className={`${isPending ? "hidden" : ""}`}>
-        {joined ? (
-          <Check className="group-hover:scale-75 transition-transform" />
-        ) : (
-          <Plus className="group-hover:scale-125 transition-transform" />
-        )}
+        {joined ? <CalendarCheck /> : <CalendarPlus />}
       </span>
     </Button>
   );

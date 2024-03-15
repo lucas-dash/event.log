@@ -1,30 +1,19 @@
 import EmptyState from "@/components/empty-state";
 import EventSection from "@/components/event/event-section";
-import { getEvents } from "@/lib/actions";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { listJoinedEvents } from "@/lib/actions";
 
 type ProfileEventsProps = {
   user_id: string;
 };
 export default async function ProfileEvents({ user_id }: ProfileEventsProps) {
-  const supabase = createSupabaseServerClient();
-  const { data: joined } = await supabase
-    .from("joined")
-    .select("event_id")
-    .eq("user_id", user_id);
+  const { data: events } = await listJoinedEvents(user_id);
 
-  if (joined?.length === 0) return <EmptyState title="No events" />;
-
-  const { data: events } = await getEvents();
-
-  const userEvents =
-    events?.filter((event) => {
-      return joined?.some((ev) => ev.event_id === event.event_id);
-    }) ?? null;
+  if (events?.length === 0 || !events)
+    return <EmptyState title="No events Found" />;
 
   return (
     <section className="py-8">
-      <EventSection label="Joined Events" events={userEvents} filter={false} />
+      <EventSection label="Joined Events" events={events} filter={false} />
     </section>
   );
 }

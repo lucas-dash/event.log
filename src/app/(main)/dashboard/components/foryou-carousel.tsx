@@ -44,7 +44,7 @@ export default async function ForyouCarousel() {
               key={event.event_id}
               className="min-[672px]:basis-1/2 lg:basis-1/3 xl:basis-1/4"
             >
-              <ForyouCard {...event} />
+              <ForyouCard {...event} userId={user.id} />
             </CarouselItem>
           ))}
         </CarouselContent>

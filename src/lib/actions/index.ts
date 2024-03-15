@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "../supabase/server";
 
 // User
@@ -76,7 +77,7 @@ export async function getEventCoverById(coverId: string) {
   return result;
 }
 
-// Favorites
+// Favorite
 
 export async function getFavoriteEventsByUserId(userId: string) {
   const supabase = createSupabaseServerClient();
@@ -96,6 +97,113 @@ export async function getFavoriteEventsByUserId(userId: string) {
     .from("event")
     .select("*")
     .in("event_id", eventsId);
+
+  return result;
+}
+
+export async function addFavorite(event_id: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase.from("favorite").insert({ event_id }).single();
+
+  revalidatePath("/dashboard");
+
+  return result;
+}
+
+export async function removeFavorite(event_id: string, user_id: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("favorite")
+    .delete()
+    .eq("event_id", event_id)
+    .eq("user_id", user_id)
+    .single();
+
+  revalidatePath("/dashboard");
+
+  return result;
+}
+
+export async function isUserFavorite(eventId: string, userId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("favorite")
+    .select("event_id, user_id")
+    .eq("event_id", eventId)
+    .eq("user_id", userId)
+    .single();
+
+  return result;
+}
+
+// Joined events
+
+export async function getJoinedEventsByUserId(userId: string) {
+  const supabase = createSupabaseServerClient();
+  const result = await supabase
+    .from("joined")
+    .select("event_id")
+    .eq("user_id", userId);
+
+  return result;
+}
+
+export async function listJoinedEvents(userId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const { data: joined, error } = await getJoinedEventsByUserId(userId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const joinedEventsId = joined.map((ev) => ev.event_id);
+
+  const result = await supabase
+    .from("event")
+    .select("*")
+    .in("event_id", joinedEventsId);
+
+  return result;
+}
+
+export async function isJoinedByUser(event_id: string, user_id: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("joined")
+    .select("event_id, user_id")
+    .eq("event_id", event_id)
+    .eq("user_id", user_id)
+    .single();
+
+  return result;
+}
+
+export async function joinEvent(event_id: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase.from("joined").insert({ event_id }).single();
+
+  revalidatePath("/dashboard");
+
+  return result;
+}
+
+export async function disconnectFromEvent(event_id: string, user_id: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("joined")
+    .delete()
+    .eq("event_id", event_id)
+    .eq("user_id", user_id)
+    .single();
+
+  revalidatePath("/dashboard");
 
   return result;
 }

@@ -7,7 +7,7 @@ type EmptyStateProps = {
 
 export default function EmptyState({ title }: EmptyStateProps) {
   return (
-    <section className="flex items-center justify-center flex-col py-5">
+    <section className="flex items-center justify-center flex-col py-10">
       <Typography variant="h2" className="text-center">
         {title}
       </Typography>
