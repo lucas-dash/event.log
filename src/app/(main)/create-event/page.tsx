@@ -12,8 +12,8 @@ export default async function CreateEvent() {
 
   return (
     <section className="py-8">
-      <Typography variant="h2" className="pl-10">
-        Create Event
+      <Typography variant="h1" className="text-center pb-10">
+        So what is the Plan?
       </Typography>
       <article className="bg-foreground dark:bg-foreground-dark rounded-2xl p-4 w-full sm:w-4/5 max-w-[820px] mx-auto space-y-4">
         <CreateEventForm userId={user.id} />

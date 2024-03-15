@@ -3,7 +3,6 @@ import { format } from "date-fns";
 import EmptyState from "../empty-state";
 import EventCard from "./event-card";
 import { Badge } from "../ui/badge";
-import { Typography } from "../ui/typography";
 
 export default async function EventInfiniteScroll() {
   const supabase = createSupabaseServerClient();
@@ -36,14 +35,9 @@ export default async function EventInfiniteScroll() {
     <section className="flex flex-col gap-6">
       {sortedDates.map((date) => (
         <section key={date} className="space-y-2">
-          <Badge variant="section">
-            <Typography
-              variant="h3"
-              className="text-base text-primary-content"
-              aria-describedby="Events Date section"
-            >
-              {format(date, "PPP")}
-            </Typography>
+          <Badge variant="calendar" className="flex-col ml-2">
+            <p>{format(date, "L")}</p>
+            <p>{format(date, "LLL")}</p>
           </Badge>
           <section
             className={`grid ${eventsByDate[date].length > 1 ? "md:grid-cols-2" : ""} gap-3 `}

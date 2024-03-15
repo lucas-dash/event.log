@@ -18,6 +18,8 @@ const badgeVariants = cva(
         tag: "border-none bg-badge hover:bg-background text-copy dark:bg-badge-dark dark:hover:bg-secondary-light dark:text-copy-dark shadow-base dark:shadow-base-dark gap-2 py-1 px-2 text-base font-bold",
         section:
           "border-none bg-primary dark:bg-primary-dark text-primary-content text-base font-bold tracking-tight px-2 py-1",
+        calendar:
+          "bg-primary text-primary-content dark:bg-primary-dark dark:text-primary-content-dark rounded-lg px-3 text-sm font-bold",
       },
     },
     defaultVariants: {
