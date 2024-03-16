@@ -1,3 +1,4 @@
+import { dashboardMap } from "@/lib/dashboard-map";
 import EventSection from "@/components/event/event-section";
 import TagsRenderer from "@/components/tags-renderer";
 import { Typography } from "@/components/ui/typography";
@@ -22,9 +23,19 @@ export default async function Dashboard() {
         <TagsRenderer />
       </section>
 
-      <EventSection label="Popular" filter link type="popular" />
-      <EventSection label="Upcoming" filter link type="greaterThan" />
-      <EventSection label="Past events" filter type="lessThan" link />
+      {dashboardMap.map((sec) => {
+        return (
+          <EventSection
+            key={sec.id}
+            label={sec.label}
+            link={sec.link}
+            linkId={sec.id}
+            type={sec.type}
+            cellRow={sec.cellRow}
+            script={sec.script}
+          />
+        );
+      })}
     </section>
   );
 }

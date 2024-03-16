@@ -13,7 +13,7 @@ export default async function ProfileEvents({ user_id }: ProfileEventsProps) {
 
   return (
     <section className="py-8">
-      <EventSection label="Joined Events" events={events} filter={false} />
+      <EventSection label="Joined Events" events={events} type="none" />
     </section>
   );
 }

@@ -99,7 +99,7 @@ export default function ForyouCard({
   userId,
 }: ForyouCardProps) {
   return (
-    <article className="min-w-[290px] w-full min-h-[230px] h-full rounded-2xl relative overflow-hidden bg-slate-300 dark:bg-slate-700 group">
+    <article className="min-w-[290px] w-full min-h-[230px] h-full rounded-2xl relative overflow-hidden bg-slate-300 dark:bg-slate-700 group shadow-md">
       <FavoriteButton
         eventId={event_id}
         userId={userId}
