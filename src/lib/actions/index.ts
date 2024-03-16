@@ -96,7 +96,8 @@ export async function getFavoriteEventsByUserId(userId: string) {
   const result = await supabase
     .from("event")
     .select("*")
-    .in("event_id", eventsId);
+    .in("event_id", eventsId)
+    .order("date", { ascending: true });
 
   return result;
 }

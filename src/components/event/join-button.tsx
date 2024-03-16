@@ -12,6 +12,7 @@ type JoinButtonProps = {
 export default function JoinButton({ eventId, userId }: JoinButtonProps) {
   const [joined, setJoined] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [loading, setLoading] = useState(false);
 
   const toggleJoinEvent = () => {
     startTransition(async () => {
@@ -36,12 +37,14 @@ export default function JoinButton({ eventId, userId }: JoinButtonProps) {
   useEffect(() => {
     const checkIsJoined = async () => {
       if (!userId) return;
+      setLoading(true);
       const { data } = await isJoinedByUser(eventId, userId);
       if (data) {
         setJoined(true);
       } else {
         setJoined(false);
       }
+      setLoading(false);
     };
     checkIsJoined();
   }, [eventId, userId]);
@@ -55,8 +58,8 @@ export default function JoinButton({ eventId, userId }: JoinButtonProps) {
       className="rounded-full max-md:h-8 max-md:w-8"
       aria-label="Join Event"
       onClick={toggleJoinEvent}
-      disabled={isPending}
-      aria-disabled={isPending}
+      disabled={isPending || loading}
+      aria-disabled={isPending || loading}
     >
       {isPending && <Loader2 className="animate-spin" />}
       <span className={`${isPending ? "hidden" : ""}`}>

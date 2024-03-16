@@ -18,6 +18,7 @@ export default function FavoriteButton({
 }: FavoriteButtonProps) {
   const [favorite, setFavorite] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [loading, setLoading] = useState(false);
 
   const toggleFavorite = () => {
     startTransition(async () => {
@@ -42,6 +43,7 @@ export default function FavoriteButton({
   useEffect(() => {
     const checkIsFavorite = async () => {
       if (!userId) return;
+      setLoading(true);
 
       const { data } = await isUserFavorite(eventId, userId);
       if (data) {
@@ -49,6 +51,7 @@ export default function FavoriteButton({
       } else {
         setFavorite(false);
       }
+      setLoading(false);
     };
     checkIsFavorite();
   }, [eventId, userId]);
@@ -63,8 +66,8 @@ export default function FavoriteButton({
       aria-label="Favorite"
       aria-describedby="Save event to favorite"
       onClick={toggleFavorite}
-      disabled={isPending}
-      aria-disabled={isPending}
+      disabled={isPending || loading}
+      aria-disabled={isPending || loading}
     >
       {isPending ? (
         <Loader2 className="animate-spin" />

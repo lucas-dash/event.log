@@ -25,7 +25,7 @@ export default async function Favorite() {
 
   return (
     <section className="py-10">
-      <EventSection events={favorite} label="Favorite Events" filter={false} />
+      <EventSection events={favorite} label="Favorite Events" type="none" />
     </section>
   );
 }
