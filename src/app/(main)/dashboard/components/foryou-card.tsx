@@ -17,13 +17,14 @@ async function ForyouCover({ coverId, title }: ForyouCoverProps) {
     cover = data;
   }
   return (
-    <div>
+    <div className="h-full w-full relative">
       {cover ? (
         <Image
           src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/covers/${cover?.created_by}/${coverId}/${cover?.name}`}
           alt={`${title} event cover`}
           fill
-          loading="lazy"
+          priority
+          sizes="(max-width: 768px) 30vw, (max-width: 1200px) 25vw, 20vw"
           className="object-cover w-full h-full rounded-lg group-hover:scale-110 duration-300 transition-transform"
         />
       ) : (

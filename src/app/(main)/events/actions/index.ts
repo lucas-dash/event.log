@@ -35,3 +35,14 @@ export async function deleteCover(
 
   return { coversError, storageError };
 }
+
+export async function getEventsByTagId(tagId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const result = await supabase
+    .from("event")
+    .select("*")
+    .contains("tags", [tagId]);
+
+  return result;
+}

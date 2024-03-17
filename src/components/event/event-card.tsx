@@ -98,7 +98,7 @@ function EventContent({
           </div>
         </div>
       </div>
-      <Link href={`events/${mainTag[0].id}`} className="w-max">
+      <Link href={`events/category/${mainTag[0].id}`} className="w-max">
         <Tag {...mainTag[0]} />
       </Link>
     </div>

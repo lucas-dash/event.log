@@ -3,7 +3,7 @@ import EventCard from "@/components/event/event-card";
 import { Badge } from "@/components/ui/badge";
 
 type SectionPageSearchParams = {
-  filter?: WithFilter["type"] | undefined;
+  filter?: WithFilter["type"];
   cellRow?: string;
   script?: string;
 };
@@ -29,7 +29,7 @@ export default async function SectionPage({
 
   return (
     <section className="py-10 space-y-4">
-      <Badge variant="section" className="capitalize text-2xl">
+      <Badge variant="section" className="capitalize text-xl">
         {sectionId}
       </Badge>
       <section className="grid md:grid-cols-2 gap-3">

@@ -16,7 +16,7 @@ export default function TagsRenderer({ eventTags }: TagsRendererProps) {
       {filteredTags.map((tag) => {
         return (
           <Link
-            href={`/events/tag/${tag.id}`}
+            href={`events/category/${tag.id}`}
             key={tag.title}
             aria-label={tag.title}
             aria-describedby={`Show more ${tag.title} events`}

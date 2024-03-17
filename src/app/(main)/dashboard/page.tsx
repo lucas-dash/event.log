@@ -13,7 +13,10 @@ export const metadata: Metadata = {
 export default async function Dashboard() {
   return (
     <section className="flex flex-col gap-5 py-5">
-      <Typography variant="h1" className="text-3xl lg:text-4xl">
+      <Typography
+        variant="h1"
+        className="text-3xl max-sm:text-center lg:text-4xl"
+      >
         Hey ready for Tonight?
       </Typography>
       <ForyouCarousel />

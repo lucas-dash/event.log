@@ -96,7 +96,10 @@ export default async function EventSection({
     <section>
       <div className="flex justify-between items-center">
         <Badge variant="section">
-          <Typography variant="h3" className="text-lg text-primary-content">
+          <Typography
+            variant="h3"
+            className="text-lg text-primary-content capitalize"
+          >
             {label}
           </Typography>
         </Badge>
