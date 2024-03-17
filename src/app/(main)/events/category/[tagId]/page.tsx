@@ -11,17 +11,13 @@ type TagPageProps = {
   };
 };
 
-export async function generateMetadata({ params: { tagId } }: TagPageProps) {
-  const allTags = tags.filter((tag) => tag.id === decodeURIComponent(tagId));
+export function generateMetadata({ params: { tagId } }: TagPageProps) {
+  const allTags = tags.find((tag) => tag.id === decodeURIComponent(tagId));
 
-  if (allTags.length === 0) {
+  if (!allTags) {
     return {
       title: "Category not found",
     };
-  }
-
-  if (allTags.length === 0) {
-    notFound();
   }
 
   const decodeTitle = decodeURIComponent(tagId).replace(/\b\w/g, (char) =>
@@ -35,13 +31,19 @@ export async function generateMetadata({ params: { tagId } }: TagPageProps) {
 }
 
 export default async function TagPage({ params: { tagId } }: TagPageProps) {
+  const decodeTitle = decodeURIComponent(tagId);
+
+  const allTags = tags.find((tag) => tag.id === decodeTitle);
+
+  if (!allTags) {
+    notFound();
+  }
+
   const { data: events, error } = await getEventsByTagId(
     decodeURIComponent(tagId),
   );
 
   if (error) throw new Error(error.message);
-
-  const decodeTitle = decodeURIComponent(tagId);
 
   return (
     <section className="py-10 space-y-4">
@@ -54,10 +56,10 @@ export default async function TagPage({ params: { tagId } }: TagPageProps) {
       <section
         className={`${events.length !== 0 ? "grid md:grid-cols-2 gap-3" : "flex items-center justify-center"}`}
       >
-        {events.length !== 0 ? (
-          events?.map((event) => <EventCard key={event.event_id} {...event} />)
-        ) : (
+        {events.length === 0 ? (
           <EmptyState title="There are no events in this category yet" />
+        ) : (
+          events?.map((event) => <EventCard key={event.event_id} {...event} />)
         )}
       </section>
     </section>

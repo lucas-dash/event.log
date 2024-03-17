@@ -3,10 +3,10 @@ import EventSection from "@/components/event/event-section";
 import { listJoinedEvents } from "@/lib/actions";
 
 type ProfileEventsProps = {
-  user_id: string;
+  userId: string;
 };
-export default async function ProfileEvents({ user_id }: ProfileEventsProps) {
-  const { data: events } = await listJoinedEvents(user_id);
+export default async function ProfileEvents({ userId }: ProfileEventsProps) {
+  const { data: events } = await listJoinedEvents(userId);
 
   if (events?.length === 0 || !events)
     return <EmptyState title="No events Found" />;

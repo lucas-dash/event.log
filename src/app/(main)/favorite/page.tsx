@@ -2,6 +2,12 @@ import EventSection from "@/components/event/event-section";
 import { getFavoriteEventsByUserId, getUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import EmptyState from "@/components/empty-state";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Favorite Events",
+  description: "Your favorite events.",
+};
 
 export default async function Favorite() {
   const { user } = await getUser();

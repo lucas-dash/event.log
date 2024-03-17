@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable consistent-return */

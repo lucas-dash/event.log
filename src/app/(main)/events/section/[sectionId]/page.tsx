@@ -14,6 +14,20 @@ type SectionIdProps = {
   };
   searchParams: SectionPageSearchParams;
 };
+
+export async function generateMetadata({
+  params: { sectionId },
+}: SectionIdProps) {
+  const decodeTitle = decodeURIComponent(sectionId).replace(/\b\w/g, (char) =>
+    char.toUpperCase(),
+  );
+
+  return {
+    title: `${decodeTitle} Section`,
+    description: `Events in ${decodeTitle} Section`,
+  };
+}
+
 export default async function SectionPage({
   params: { sectionId },
   searchParams,
