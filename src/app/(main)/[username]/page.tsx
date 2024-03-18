@@ -3,8 +3,6 @@ import EmptyState from "@/components/empty-state";
 import ProfileHeader from "./components/profile-header";
 import ProfileEvents from "./components/profile-events";
 
-export const revalidate = 60;
-
 type UserProfileProps = {
   params: {
     username: string;
