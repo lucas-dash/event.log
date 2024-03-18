@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { getSearchPlace } from "@/lib/get-search-place";
 import { useDebounce } from "@/lib/hooks/useDebounce";
-import { Asterisk, Loader2, MapPin } from "lucide-react";
+import { Loader2, MapPin } from "lucide-react";
 import { SearchPlaceType } from "@/lib/types/search-place";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -21,7 +21,7 @@ import { Label } from "./ui/label";
 import { FormDescription } from "./ui/form";
 
 type Props = {
-  setCoord: Dispatch<SetStateAction<[number, number]>>;
+  setCoord: Dispatch<SetStateAction<[number, number] | null>>;
   address: string;
   setAddress: Dispatch<SetStateAction<string>>;
 } & HTMLAttributes<HTMLInputElement>;
@@ -45,7 +45,6 @@ const SearchPlacesInput = forwardRef(
           setSuggest(true);
 
           const res: SearchPlaceType = await getSearchPlace(search_text);
-          // console.log(res);
           setPlaces(res);
 
           setLoading(false);
@@ -75,10 +74,7 @@ const SearchPlacesInput = forwardRef(
 
     return (
       <div className="relative space-y-2">
-        <Label htmlFor="address" className="flex">
-          Address
-          <Asterisk size={12} className="text-primary" />
-        </Label>
+        <Label htmlFor="address">Address</Label>
 
         <Input
           id="address"

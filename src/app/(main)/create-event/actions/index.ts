@@ -11,7 +11,7 @@ type FormDataType = {
   data: TypeOf<typeof eventSchema>;
   cover: string | null;
   address: string;
-  coordinates: [number, number];
+  coordinates: [number, number] | null;
 };
 
 export async function createEvent(values: FormDataType) {
@@ -30,6 +30,7 @@ export async function createEvent(values: FormDataType) {
     alerts,
     homepage,
     tickets_link,
+    isFree,
   } = values.data;
 
   const result = await supabase
@@ -50,6 +51,7 @@ export async function createEvent(values: FormDataType) {
       coordinates: values.coordinates,
       price_from,
       tags,
+      isFree,
     })
     .single();
 

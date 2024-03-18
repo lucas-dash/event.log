@@ -11,8 +11,9 @@ export const eventSchema = z.object({
   }),
   tickets_link: z.string().optional().nullable(),
   homepage: z.string().optional().nullable(),
-  price: z.number().min(0),
-  price_from: z.boolean().optional(),
+  price: z.string(),
+  price_from: z.boolean(),
+  isFree: z.boolean(),
   schedule: z.string().max(500).optional(),
   alerts: z.string().max(200).optional(),
 });

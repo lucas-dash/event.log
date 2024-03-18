@@ -16,7 +16,6 @@ import "@uppy/dashboard/dist/style.min.css";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -42,9 +41,14 @@ import SearchPlacesInput from "@/components/search-places-input";
 import Tag from "@/components/tag";
 import { createEvent } from "../actions";
 
-export default function CreateEventForm({ userId }: { userId: string }) {
+type CreateEventFormProps = {
+  userId: string;
+  type: "Create" | "Edit";
+};
+
+export default function CreateEventForm({ userId }: CreateEventFormProps) {
   const [isPending, startTransition] = useTransition();
-  const [coord, setCoord] = useState<[number, number]>([0, 0]);
+  const [coord, setCoord] = useState<[number, number] | null>(null);
   const [address, setAddress] = useState("");
 
   const onBeforeRequest = async (req: any) => {
@@ -102,8 +106,9 @@ export default function CreateEventForm({ userId }: { userId: string }) {
       tags: [],
       tickets_link: "",
       homepage: "",
-      price: 1.0,
+      price: "",
       price_from: false,
+      isFree: false,
       schedule: "",
       alerts: "",
     },
@@ -183,7 +188,7 @@ export default function CreateEventForm({ userId }: { userId: string }) {
                 <FormControl>
                   <Input
                     type="text"
-                    placeholder="Madison Square Garden"
+                    placeholder="Event Location or Online"
                     {...field}
                     onChange={field.onChange}
                   />
@@ -273,47 +278,69 @@ export default function CreateEventForm({ userId }: { userId: string }) {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex py-[2px]">
-                      Price per ticket (USD)
-                      <Asterisk size={12} className="text-primary" />
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        min={1.0}
-                        step={0.01}
-                        placeholder="$19.99"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(Number(e.target.value));
+                    <FormLabel className="flex items-center gap-3 py-[2px]">
+                      <div className="flex items-center">
+                        Price per ticket (USD)
+                        <Asterisk size={12} className="text-primary" />
+                      </div>
+                      <FormField
+                        control={form.control}
+                        name="isFree"
+                        // eslint-disable-next-line @typescript-eslint/no-shadow
+                        render={({ field }) => {
+                          return (
+                            <FormItem className="flex items-center gap-1 space-y-0">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                              <FormLabel className="cursor-pointer">
+                                Free?
+                              </FormLabel>
+                            </FormItem>
+                          );
                         }}
                       />
+                    </FormLabel>
+                    <FormControl>
+                      <div className="flex items-center gap-2 h-10 w-full overflow-hidden rounded-xl bg-white dark:bg-secondary-light border border-border dark:border-border-dark px-1 py-2">
+                        <Input
+                          type="number"
+                          min={0}
+                          step={0.01}
+                          placeholder="$19.99"
+                          className="border-none outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                          {...field}
+                          onChange={field.onChange}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="price_from"
+                          // eslint-disable-next-line @typescript-eslint/no-shadow
+                          render={({ field }) => {
+                            return (
+                              <FormItem className="flex items-center gap-2 space-y-0">
+                                <FormLabel className="cursor-pointer">
+                                  From?
+                                </FormLabel>
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-              <FormField
-                control={form.control}
-                name="price_from"
-                render={({ field }) => {
-                  return (
-                    <FormItem className="space-x-2">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormLabel className="cursor-pointer">
-                        Starting price?
-                      </FormLabel>
-                      <FormDescription>
-                        Do you have more prices?
-                      </FormDescription>
-                    </FormItem>
-                  );
-                }}
               />
             </div>
           </div>

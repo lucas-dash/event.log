@@ -5,9 +5,18 @@
 .uppy-Dashboard-inner {
   width: auto !important;
   height: 25rem !important;
-  background-color: #333 !important;
+  background-color: #bdbdbd !important;
 }
 
 .uppy-Dashboard-AddFiles-title {
-  color: #e0e0e0 !important;
+  color: #282524 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .uppy-Dashboard-inner {
+    background-color: #333 !important;
+  }
+  .uppy-Dashboard-AddFiles-title {
+    color: #e0e0e0 !important;
+  }
 }

@@ -53,7 +53,7 @@ export type Database = {
         Row: {
           address: string;
           alerts: string | null;
-          coordinates: number[];
+          coordinates: number[] | null;
           cover_id: string | null;
           created_at: string;
           created_by: string;
@@ -61,8 +61,9 @@ export type Database = {
           description: string;
           event_id: string;
           homepage: string | null;
+          isFree: boolean;
           place: string;
-          price: number;
+          price: string;
           price_from: boolean;
           schedule: string | null;
           tags: string[];
@@ -71,9 +72,9 @@ export type Database = {
           title: string;
         };
         Insert: {
-          address: string;
+          address?: string;
           alerts?: string | null;
-          coordinates?: number[];
+          coordinates?: number[] | null;
           cover_id?: string | null;
           created_at?: string;
           created_by?: string;
@@ -81,8 +82,9 @@ export type Database = {
           description: string;
           event_id?: string;
           homepage?: string | null;
+          isFree?: boolean;
           place?: string;
-          price: number;
+          price?: string;
           price_from?: boolean;
           schedule?: string | null;
           tags?: string[];
@@ -93,7 +95,7 @@ export type Database = {
         Update: {
           address?: string;
           alerts?: string | null;
-          coordinates?: number[];
+          coordinates?: number[] | null;
           cover_id?: string | null;
           created_at?: string;
           created_by?: string;
@@ -101,8 +103,9 @@ export type Database = {
           description?: string;
           event_id?: string;
           homepage?: string | null;
+          isFree?: boolean;
           place?: string;
-          price?: number;
+          price?: string;
           price_from?: boolean;
           schedule?: string | null;
           tags?: string[];
