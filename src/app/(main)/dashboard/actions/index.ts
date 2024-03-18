@@ -3,7 +3,7 @@
 import { getFavoriteEventsByUserId } from "@/lib/actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export async function findSimilarEvents(userId: string) {
+export async function findSimilarEvents(userId: string, limit = 4) {
   const supabase = createSupabaseServerClient();
 
   const { data: favorite, error: favoriteError } =
@@ -29,7 +29,7 @@ export async function findSimilarEvents(userId: string) {
     .or(preferenceQuery)
     .not("event_id", "in", `(${favEventsId})`)
     .not("cover_id", "is", null)
-    .limit(4);
+    .limit(limit);
 
   return result;
 }

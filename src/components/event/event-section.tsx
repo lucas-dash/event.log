@@ -114,7 +114,7 @@ export default async function EventSection({
           </Button>
         )}
       </div>
-      <div className="grid md:grid-cols-2 gap-3 pt-3">
+      <div className="grid md:grid-cols-2 gap-3 mt-3">
         {props.type === "none"
           ? props.events?.map((event) => (
               <EventCard key={event.event_id} {...event} />

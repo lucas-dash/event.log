@@ -1,6 +1,7 @@
 import { getEventById } from "@/lib/actions";
 import { notFound } from "next/navigation";
 import EventPage from "./components/event-page";
+import RelatedEvents from "./components/related-events";
 
 type EventIdProps = {
   params: {
@@ -40,6 +41,7 @@ export default async function EventId({ params: { eventId } }: EventIdProps) {
   return (
     <section className="py-5">
       <EventPage {...data} />
+      <RelatedEvents eventId={data.event_id} tagId={data.tags} />
     </section>
   );
 }
