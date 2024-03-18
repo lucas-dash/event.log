@@ -4,6 +4,7 @@ import { tags as allTags } from "@/lib/constants";
 import { format } from "date-fns";
 import { getEventCoverById } from "@/lib/actions";
 import Link from "next/link";
+import { timeFormat } from "@/lib/utils";
 import { Typography } from "../ui/typography";
 import EventActions from "./event-actions";
 import Tag from "../tag";
@@ -86,13 +87,14 @@ function EventContent({
               size={20}
               className="text-copy-light dark:text-copy-light-dark"
             />
-            <Typography variant="muted">
+            <Typography variant="muted" aria-label={format(date, "PP")}>
               {format(date, "PP")}
               <Typography
                 variant="caption"
                 className="text-sm max-sm:hidden pl-1 text-copy-light dark:text-copy-light-dark"
+                aria-label={timeFormat(`${date} ${time}`)}
               >
-                {time}
+                {timeFormat(`${date} ${time}`)}
               </Typography>
             </Typography>
           </div>

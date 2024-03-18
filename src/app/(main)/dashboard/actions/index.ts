@@ -25,7 +25,9 @@ export async function findSimilarEvents(userId: string, limit = 4) {
 
   const result = await supabase
     .from("event")
-    .select("place, date, time, title, event_id, cover_id")
+    .select(
+      "place, date, time, title, event_id, cover_id, price, isFree, price_from",
+    )
     .or(preferenceQuery)
     .not("event_id", "in", `(${favEventsId})`)
     .not("cover_id", "is", null)

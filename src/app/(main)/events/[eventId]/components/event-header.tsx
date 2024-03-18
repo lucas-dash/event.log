@@ -3,6 +3,7 @@ import TagsRenderer from "@/components/tags-renderer";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { currencyFormat, timeFormat } from "@/lib/utils";
 import { format } from "date-fns";
 import { MapPin, MapPinned, Ticket } from "lucide-react";
 import Link from "next/link";
@@ -69,7 +70,7 @@ export default async function EventHeader({
           <div className="flex items-center gap-1">
             <Ticket className="text-copy-lighter dark:text-copy-lighter-dark" />
             <Typography variant="muted" className="text-base">
-              {priceFrom && !isFree ? "From" : ""} ${isFree ? "Free" : price}
+              {currencyFormat(price, priceFrom, isFree)}
             </Typography>
           </div>
 
@@ -98,7 +99,7 @@ export default async function EventHeader({
             aria-label="Event Start Time"
             aria-description={time}
           >
-            {time}
+            {timeFormat(`${date} ${time}`)}
           </Typography>
         </div>
 
