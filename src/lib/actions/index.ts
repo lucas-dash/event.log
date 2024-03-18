@@ -152,7 +152,7 @@ export async function getJoinedEventsByUserId(userId: string) {
   return result;
 }
 
-export async function listJoinedEvents(userId: string) {
+export async function listUserJoinedEvents(userId: string) {
   const supabase = createSupabaseServerClient();
 
   const { data: joined, error } = await getJoinedEventsByUserId(userId);

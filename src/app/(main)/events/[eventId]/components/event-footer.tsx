@@ -1,51 +1,61 @@
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
-import { format } from "date-fns";
 import Link from "next/link";
+import { AlertTriangle } from "lucide-react";
 
 type EventFooterProps = {
-  time: string;
-  date: string;
-  ticketsLink: string | null;
+  description: string;
+  homepage: string | null;
+  alerts: string | null;
+  schedule: string | null;
 };
 export default function EventFooter({
-  date,
-  time,
-  ticketsLink,
+  description,
+  homepage,
+  alerts,
+  schedule,
 }: EventFooterProps) {
   return (
-    <>
-      <div className="flex items-center gap-4 w-full flex-wrap justify-center pb-8 px-2">
-        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[150px] p-3">
-          <Typography className="text-secondary-content">Time</Typography>
-          <Typography
-            className="text-secondary-content text-xl font-bold [&:not(:first-child)]:mt-2"
-            aria-label="Event Start Time"
-            aria-description={time}
-          >
-            {time}
-          </Typography>
-        </div>
-
-        <div className="bg-secondary dark:bg-secondary-dark rounded-xl grid place-items-center min-w-[150px] p-3">
-          <Typography className="text-secondary-content">Date</Typography>
-          <Typography
-            className="text-secondary-content text-xl font-bold [&:not(:first-child)]:mt-2 break-words text-center"
-            aria-label="Event Date"
-            aria-description={format(date, "PP")}
-          >
-            {format(date, "PP")}
-          </Typography>
-        </div>
+    <article className="px-5 pt-8 flex flex-col gap-5">
+      <div>
+        <Typography variant="h4">Description</Typography>
+        <Typography variant="body" className="[&:not(:first-child)]:mt-2">
+          {description}
+        </Typography>
       </div>
 
-      <div className="w-full flex items-center flex-wrap justify-center gap-4">
-        <Button asChild>
-          <Link href={ticketsLink || ""} target="_blank" rel="noreferrer">
-            {ticketsLink ? "Get Tickets" : "Tickets on site"}
-          </Link>
-        </Button>
+      {schedule && (
+        <div>
+          <Typography variant="h4">Schedule</Typography>
+          <Typography variant="body" className="[&:not(:first-child)]:mt-2">
+            {schedule}
+          </Typography>
+        </div>
+      )}
+
+      <div>
+        {homepage && (
+          <div className="flex flex-col w-full items-start">
+            <Typography variant="h5">Homepage</Typography>
+            <Button asChild variant="link" className="p-0">
+              <Link href={homepage} className="break-all text-wrap">
+                {homepage}
+              </Link>
+            </Button>
+          </div>
+        )}
+        {alerts && (
+          <div className="flex flex-col w-full items-start">
+            <Typography variant="h5" className="flex items-center gap-1">
+              <AlertTriangle size={20} />
+              Alerts
+            </Typography>
+            <Typography variant="body" className="[&:not(:first-child)]:mt-2">
+              {alerts}
+            </Typography>
+          </div>
+        )}
       </div>
-    </>
+    </article>
   );
 }
