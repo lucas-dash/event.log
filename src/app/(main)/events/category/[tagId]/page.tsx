@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import EventCard from "@/components/event/event-card";
-import EmptyState from "@/components/empty-state";
 import { tags } from "@/lib/constants";
-import { getEventsByTagId } from "../../actions";
+import EventsInfiniteCollection from "@/components/event/events-infinite-collection";
 
 type TagPageProps = {
   params: {
@@ -39,11 +37,9 @@ export default async function TagPage({ params: { tagId } }: TagPageProps) {
     notFound();
   }
 
-  const { data: events, error } = await getEventsByTagId(
-    decodeURIComponent(tagId),
-  );
-
-  if (error) throw new Error(error.message);
+  const options = {
+    tagId: [decodeTitle],
+  };
 
   return (
     <section className="py-10 space-y-4">
@@ -53,15 +49,11 @@ export default async function TagPage({ params: { tagId } }: TagPageProps) {
       >
         {decodeTitle} Category
       </Badge>
-      <section
-        className={`${events.length !== 0 ? "grid md:grid-cols-2 gap-3" : "flex items-center justify-center"}`}
-      >
-        {events.length === 0 ? (
-          <EmptyState title="There are no events in this category yet" />
-        ) : (
-          events?.map((event) => <EventCard key={event.event_id} {...event} />)
-        )}
-      </section>
+
+      <EventsInfiniteCollection
+        emptyStateTitle={`There are no events in ${decodeTitle} Category yet`}
+        options={options}
+      />
     </section>
   );
 }

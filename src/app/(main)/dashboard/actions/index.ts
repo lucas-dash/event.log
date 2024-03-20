@@ -3,7 +3,7 @@
 import { getFavoriteEventsByUserId } from "@/lib/actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export async function findSimilarEvents(userId: string, limit = 4) {
+export async function findSimilarEvents(userId: string, limit = 6) {
   const supabase = createSupabaseServerClient();
 
   const { data: favorite, error: favoriteError } =

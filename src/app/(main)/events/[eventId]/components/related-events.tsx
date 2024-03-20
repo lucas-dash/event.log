@@ -21,7 +21,9 @@ export default async function RelatedEvents({
   return (
     <section className="py-10">
       <Badge variant="section">
-        <Typography variant="h3">Related Events</Typography>
+        <Typography variant="h3" className="text-primary-content">
+          Related Events
+        </Typography>
       </Badge>
 
       <div className="grid md:grid-cols-2 gap-3 mt-3">
