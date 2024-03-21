@@ -55,7 +55,7 @@ export default function JoinButton({ eventId, userId }: JoinButtonProps) {
     <Button
       size="icon"
       variant={`${joined ? "joined" : "outline"}`}
-      className="rounded-full max-md:h-8 max-md:w-8"
+      className="rounded-full max-md:h-9 max-md:w-9"
       aria-label="Join Event"
       onClick={toggleJoinEvent}
       disabled={isPending || loading}

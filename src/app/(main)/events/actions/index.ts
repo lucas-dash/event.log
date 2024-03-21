@@ -37,13 +37,13 @@ export async function getPopularEvents() {
 }
 
 export type Options = {
+  popular?: boolean;
   equalTo?: { cell: string; value: string };
   greaterThan?: { cell: string; value: string };
   lessThan?: { cell: string; value: string };
   tagId?: string[];
   search?: { cell: string; value: string };
   not?: { cell: string; filter: string; value: string };
-  popular?: boolean;
   byDate?: boolean;
   ascending?: true | false;
 };
@@ -56,13 +56,13 @@ export async function getPaginatedFilteredEvents(
   const supabase = createSupabaseServerClient();
 
   const {
+    popular,
     equalTo,
     greaterThan,
     lessThan,
     tagId,
     search,
     not,
-    popular,
     byDate = true,
     ascending = true,
   } = options || {};
@@ -125,6 +125,47 @@ export async function findRelatedEvents(eventId: string, tagId: string[]) {
     .limit(4);
 
   return result;
+}
+
+export async function getPaginatedEventsByMonth(
+  page: number,
+  monthsPerPage = 4,
+) {
+  const supabase = createSupabaseServerClient();
+
+  // Calculate the date range for the requested page
+  const currentDate = new Date();
+  currentDate.setMonth(currentDate.getMonth() + (page - 1) * monthsPerPage);
+  currentDate.setDate(1); // Start from the first day of the month
+  const startDate = currentDate.toISOString();
+
+  currentDate.setMonth(currentDate.getMonth() + monthsPerPage);
+  currentDate.setDate(0); // Last day of the last month in the page
+  const endDate = currentDate.toISOString();
+
+  const { data: events, error } = await supabase
+    .from("event")
+    .select("*")
+    .gte("date", startDate)
+    .lte("date", endDate)
+    .order("date", { ascending: true });
+
+  if (error) throw new Error(error.message);
+
+  const eventsByMonth: Record<string, EventType[]> = {};
+
+  events?.forEach((event) => {
+    const month = new Date(event.date).toLocaleDateString(undefined, {
+      month: "long",
+      year: "numeric",
+    });
+    if (!eventsByMonth[month]) {
+      eventsByMonth[month] = [];
+    }
+    eventsByMonth[month].push(event);
+  });
+
+  return Object.values(eventsByMonth);
 }
 
 // DELETE ACTIONS

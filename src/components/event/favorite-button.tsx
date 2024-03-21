@@ -62,7 +62,7 @@ export default function FavoriteButton({
     <Button
       size="icon"
       variant={variant || "ghost"}
-      className={cn("rounded-full max-md:h-8 max-md:w-8 group/fav ", className)}
+      className={cn("rounded-full max-md:h-9 max-md:w-9 group/fav ", className)}
       aria-label="Favorite"
       aria-describedby="Save event to favorite"
       onClick={toggleFavorite}
