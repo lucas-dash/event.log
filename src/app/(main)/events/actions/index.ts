@@ -45,6 +45,7 @@ export type Options = {
   not?: { cell: string; filter: string; value: string };
   popular?: boolean;
   byDate?: boolean;
+  ascending?: true | false;
 };
 
 export async function getPaginatedFilteredEvents(
@@ -63,6 +64,7 @@ export async function getPaginatedFilteredEvents(
     not,
     popular,
     byDate = true,
+    ascending = true,
   } = options || {};
 
   const start = (page - 1) * pageLimit;
@@ -94,7 +96,7 @@ export async function getPaginatedFilteredEvents(
   }
 
   if (byDate) {
-    query = query.order("date", { ascending: true });
+    query = query.order("date", { ascending });
   }
 
   if (search) {
@@ -113,10 +115,12 @@ export async function getPaginatedFilteredEvents(
 export async function findRelatedEvents(eventId: string, tagId: string[]) {
   const supabase = createSupabaseServerClient();
 
+  const preferenceQuery = tagId.map((tag) => `tags.cs.{${tag}}`).join(",");
+
   const result = await supabase
     .from("event")
     .select("*")
-    .contains("tags", tagId)
+    .or(preferenceQuery)
     .not("event_id", "eq", eventId)
     .limit(4);
 

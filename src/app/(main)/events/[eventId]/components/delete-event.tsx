@@ -37,7 +37,7 @@ export default function DeleteEvent({
         }
       }
 
-      toast.success("Event deleted");
+      toast.success("Event was deleted");
       router.push("/events");
     }
   };

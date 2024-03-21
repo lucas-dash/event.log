@@ -1,4 +1,4 @@
-// import { dashboardMap } from "@/lib/dashboard-map";
+import { dashboardMap } from "@/lib/dashboard-map";
 import TagsRenderer from "@/components/tags-renderer";
 import { Typography } from "@/components/ui/typography";
 import { Metadata } from "next";
@@ -26,50 +26,19 @@ export default async function Dashboard() {
         <TagsRenderer />
       </section>
 
-      <EventShowcaseCollection
-        label="Popular Events"
-        heading="h4"
-        link
-        linkPath="popular"
-        type="filter"
-        options={{ popular: true, byDate: false }}
-      />
-
-      <EventShowcaseCollection
-        label="Upcoming Events"
-        heading="h4"
-        link
-        linkPath="upcoming"
-        type="filter"
-        options={{
-          greaterThan: { cell: "date", value: new Date().toISOString() },
-        }}
-      />
-
-      <EventShowcaseCollection
-        label="Past Events"
-        heading="h4"
-        link
-        linkPath="past-events"
-        type="filter"
-        options={{
-          lessThan: { cell: "date", value: new Date().toISOString() },
-        }}
-      />
-
-      {/* {dashboardMap.map((sec) => {
+      {dashboardMap.map((collection) => {
         return (
-          <EventSection
-            key={sec.id}
-            label={sec.label}
-            link={sec.link}
-            linkPath={sec.id}
-            type={sec.type}
-            cellRow={sec.cellRow}
-            script={sec.script}
+          <EventShowcaseCollection
+            key={collection.linkPath}
+            label={collection.label}
+            heading="h4"
+            link={collection.link}
+            linkPath={collection.linkPath}
+            type={collection.type}
+            options={collection.options}
           />
         );
-      })} */}
+      })}
     </section>
   );
 }

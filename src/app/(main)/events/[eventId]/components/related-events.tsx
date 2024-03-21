@@ -1,6 +1,4 @@
-import { Badge } from "@/components/ui/badge";
-import { Typography } from "@/components/ui/typography";
-import EventCard from "@/components/event/event-card";
+import EventShowcaseCollection from "@/components/event/event-showcase-collection";
 import { findRelatedEvents } from "../../actions";
 
 type RelatedEventsProps = {
@@ -20,17 +18,11 @@ export default async function RelatedEvents({
 
   return (
     <section className="py-10">
-      <Badge variant="section">
-        <Typography variant="h3" className="text-primary-content">
-          Related Events
-        </Typography>
-      </Badge>
-
-      <div className="grid md:grid-cols-2 gap-3 mt-3">
-        {relatedEvents.map((event) => (
-          <EventCard key={event.event_id} {...event} />
-        ))}
-      </div>
+      <EventShowcaseCollection
+        label="Related Events"
+        events={relatedEvents}
+        type="noFilter"
+      />
     </section>
   );
 }

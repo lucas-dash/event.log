@@ -1,42 +1,36 @@
+import { Options } from "@/app/(main)/events/actions";
+
 type DashboardMapType = {
-  id: string;
   label: string;
   link: boolean;
-  filter: true | false;
-} & WithFilter;
-
-type WithFilter = {
-  type: "gt" | "lt" | "eq" | "popular";
-  cellRow?: string;
-  script?: string;
+  linkPath: string;
+  type: "filter";
+  options: Options;
 };
 
 export const dashboardMap: DashboardMapType[] = [
   {
-    id: "popular",
-    label: "Popular",
+    label: "Popular Events",
     link: true,
-    filter: true,
-    type: "popular",
-    cellRow: undefined,
-    script: undefined,
+    linkPath: "popular",
+    type: "filter",
+    options: { popular: true, byDate: false },
   },
   {
-    id: "upcoming",
-    label: "Upcoming",
+    label: "Upcoming Events",
     link: true,
-    filter: true,
-    type: "gt",
-    cellRow: "date",
-    script: new Date().toISOString(),
+    linkPath: "upcoming",
+    type: "filter" as const,
+    options: { greaterThan: { cell: "date", value: new Date().toISOString() } },
   },
   {
-    id: "past",
     label: "Past events",
     link: true,
-    filter: true,
-    type: "lt",
-    cellRow: "date",
-    script: new Date().toISOString(),
+    linkPath: "past-events",
+    type: "filter",
+    options: {
+      lessThan: { cell: "date", value: new Date().toISOString() },
+      ascending: false,
+    },
   },
 ];

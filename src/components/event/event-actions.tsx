@@ -9,10 +9,12 @@ import JoinButton from "./join-button";
 type EventActionsProps = {
   event_id: string;
   orientation?: "vertical" | "horizontal";
+  button?: "favorite" | "join" | "both";
 };
 export default function EventActions({
   event_id,
   orientation = "vertical",
+  button = "both",
   className,
   ...props
 }: EventActionsProps & HTMLAttributes<HTMLDivElement>) {
@@ -23,13 +25,17 @@ export default function EventActions({
   return (
     <div
       className={cn(
-        `flex gap-2 bg-badge dark:bg-badge-dark rounded-xl p-1 shadow-base dark:shadow-base-dark ${orientation === "vertical" ? "flex-col" : ""}`,
+        `flex h-max gap-2 bg-badge dark:bg-badge-dark rounded-xl p-1 shadow-base dark:shadow-base-dark ${orientation === "vertical" ? "flex-col" : ""}`,
         className,
       )}
       {...props}
     >
-      <FavoriteButton eventId={event_id} userId={user.id} />
-      <JoinButton eventId={event_id} userId={user.id} />
+      {(button === "favorite" || button === "both") && (
+        <FavoriteButton eventId={event_id} userId={user.id} />
+      )}
+      {(button === "join" || button === "both") && (
+        <JoinButton eventId={event_id} userId={user.id} />
+      )}
     </div>
   );
 }

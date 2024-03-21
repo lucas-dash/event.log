@@ -245,6 +245,7 @@ export default function CreateEventForm({ userId }: CreateEventFormProps) {
                         selected={field.value}
                         onSelect={field.onChange}
                         disabled={[{ before: new Date() }]}
+                        weekStartsOn={1}
                       />
                     </PopoverContent>
                   </Popover>
@@ -408,7 +409,7 @@ export default function CreateEventForm({ userId }: CreateEventFormProps) {
                 <FormControl>
                   <Textarea
                     placeholder="About event"
-                    maxLength={300}
+                    maxLength={900}
                     {...field}
                     onChange={field.onChange}
                   />
@@ -427,7 +428,7 @@ export default function CreateEventForm({ userId }: CreateEventFormProps) {
                 <FormControl>
                   <Textarea
                     placeholder="Start: 19:00..."
-                    maxLength={500}
+                    maxLength={900}
                     {...field}
                     onChange={field.onChange}
                   />
@@ -495,7 +496,7 @@ export default function CreateEventForm({ userId }: CreateEventFormProps) {
                 <FormControl>
                   <Textarea
                     placeholder="No smoking..."
-                    maxLength={200}
+                    maxLength={500}
                     {...field}
                     onChange={field.onChange}
                   />

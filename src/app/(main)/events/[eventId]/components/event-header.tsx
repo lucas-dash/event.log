@@ -86,7 +86,11 @@ export default async function EventHeader({
             </div>
           )}
         </article>
-        <EventActions event_id={eventId} />
+        <EventActions
+          event_id={eventId}
+          button="favorite"
+          className="rounded-full"
+        />
       </div>
 
       <TagsRenderer eventTags={tags} />
