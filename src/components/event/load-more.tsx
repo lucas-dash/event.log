@@ -7,6 +7,7 @@ import {
   Options,
   getPaginatedFilteredEvents,
 } from "@/app/(main)/events/actions";
+import EventCollection from "./event-collection";
 
 type LoadMoreProps = {
   options?: Options;
@@ -35,16 +36,7 @@ export default function LoadMore({ options }: LoadMoreProps) {
 
   return (
     <>
-      <section className="grid md:grid-cols-2 gap-3 mt-3">
-        {data.map((event, i) => {
-          return (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={i} className="min-h-72 bg-blue-300">
-              <h2>{event.title}</h2>
-            </div>
-          );
-        })}
-      </section>
+      <EventCollection data={data} />
       {!stopScroll && (
         <section className="w-full flex items-center justify-center my-5">
           <div ref={ref}>

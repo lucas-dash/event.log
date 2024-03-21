@@ -1,8 +1,8 @@
-import EventSection from "@/components/event/event-section";
 import { getFavoriteEventsByUserId, getUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import EmptyState from "@/components/empty-state";
 import { Metadata } from "next";
+import EventShowcaseCollection from "@/components/event/event-showcase-collection";
 
 export const metadata: Metadata = {
   title: "Favorite Events",
@@ -31,7 +31,11 @@ export default async function Favorite() {
 
   return (
     <section className="py-10">
-      <EventSection events={favorite} label="Favorite Events" type="none" />
+      <EventShowcaseCollection
+        label="Favorite Events"
+        type="noFilter"
+        events={favorite}
+      />
     </section>
   );
 }

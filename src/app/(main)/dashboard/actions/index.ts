@@ -35,29 +35,3 @@ export async function findSimilarEvents(userId: string, limit = 6) {
 
   return result;
 }
-
-export async function getPopularEvents() {
-  const supabase = createSupabaseServerClient();
-
-  const { data, error } = await supabase.from("joined").select("event_id");
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  const eventIdCountMap = data.reduce<Record<string, number>>((acc, event) => {
-    acc[event.event_id] = (acc[event.event_id] || 0) + 1;
-    return acc;
-  }, {});
-
-  const sortedEventIds = Object.keys(eventIdCountMap)
-    .sort((a, b) => eventIdCountMap[b] - eventIdCountMap[a])
-    .slice(0, 4);
-
-  const result = await supabase
-    .from("event")
-    .select("*")
-    .in("event_id", sortedEventIds);
-
-  return result;
-}

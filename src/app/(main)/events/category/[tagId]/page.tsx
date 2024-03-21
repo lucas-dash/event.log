@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
 import { tags } from "@/lib/constants";
 import EventsInfiniteCollection from "@/components/event/events-infinite-collection";
 
@@ -42,15 +41,9 @@ export default async function TagPage({ params: { tagId } }: TagPageProps) {
   };
 
   return (
-    <section className="py-10 space-y-4">
-      <Badge
-        variant="section"
-        className="capitalize text-xl shadow-base dark:shadow-base-dark"
-      >
-        {decodeTitle} Category
-      </Badge>
-
+    <section className="py-10">
       <EventsInfiniteCollection
+        label={`${decodeTitle} Category`}
         emptyStateTitle={`There are no events in ${decodeTitle} Category yet`}
         options={options}
       />

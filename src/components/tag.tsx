@@ -14,12 +14,12 @@ export default function Tag({
   return (
     <Badge
       variant="tag"
-      className={cn("text-sm", className)}
+      className={cn("", className)}
       {...props}
       aria-label={`${title} tag`}
     >
       <div
-        className="rounded-full p-1.5 flex items-center justify-center"
+        className="rounded-full p-1 flex items-center justify-center"
         style={{ backgroundColor: `${color}` }}
       >
         <Icon size={20} />

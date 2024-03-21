@@ -1,5 +1,5 @@
 import EmptyState from "@/components/empty-state";
-import EventSection from "@/components/event/event-section";
+import EventShowcaseCollection from "@/components/event/event-showcase-collection";
 import { listUserJoinedEvents } from "@/lib/actions";
 
 type ProfileEventsProps = {
@@ -13,7 +13,11 @@ export default async function ProfileEvents({ userId }: ProfileEventsProps) {
 
   return (
     <section className="py-8">
-      <EventSection label="Joined Events" events={events} type="none" />
+      <EventShowcaseCollection
+        label="Joined Events"
+        type="noFilter"
+        events={events}
+      />
     </section>
   );
 }

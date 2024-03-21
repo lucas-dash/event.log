@@ -3,13 +3,19 @@ import Link from "next/link";
 import Tag from "./tag";
 
 type TagsRendererProps = {
-  eventTags?: string[];
+  eventTags?: string[] | string;
 };
 
 export default function TagsRenderer({ eventTags }: TagsRendererProps) {
-  const filteredTags = tags.filter((tag) =>
-    eventTags ? eventTags.some((eventTag) => eventTag === tag.id) : true,
-  );
+  const filteredTags = tags.filter((tag) => {
+    if (typeof eventTags !== "string" && eventTags) {
+      return eventTags.some((eventTag) => eventTag === tag.id);
+    }
+    if (typeof eventTags === "string") {
+      return eventTags === tag.id;
+    }
+    return tag;
+  });
 
   return (
     <div className="flex items-center gap-2 flex-wrap">

@@ -1,18 +1,11 @@
-import { WithFilter, eventsFilter } from "@/components/event/event-section";
-import EventCard from "@/components/event/event-card";
-import { Badge } from "@/components/ui/badge";
-
-type SectionPageSearchParams = {
-  filter?: WithFilter["type"];
-  cellRow?: string;
-  script?: string;
-};
+import EventsInfiniteCollection from "@/components/event/events-infinite-collection";
+import { Options } from "../../actions";
 
 type SectionIdProps = {
   params: {
     sectionId: string;
   };
-  searchParams: SectionPageSearchParams;
+  searchParams: { [key: string]: string };
 };
 
 export async function generateMetadata({
@@ -32,23 +25,17 @@ export default async function SectionPage({
   params: { sectionId },
   searchParams,
 }: SectionIdProps) {
-  const { data, error } = await eventsFilter(
-    searchParams.filter || "gt",
-    searchParams.script,
-    searchParams.cellRow,
-    20,
-  );
+  const decodeTitle = decodeURIComponent(sectionId);
 
-  if (error) throw new Error(error.message);
+  const options: Options = JSON.parse(searchParams.options);
 
   return (
-    <section className="py-10 space-y-4">
-      <Badge variant="section" className="capitalize text-xl">
-        {sectionId}
-      </Badge>
-      <section className="grid md:grid-cols-2 gap-3">
-        {data?.map((event) => <EventCard key={event.event_id} {...event} />)}
-      </section>
+    <section className="py-10">
+      <EventsInfiniteCollection
+        label={`${decodeTitle} Events`}
+        emptyStateTitle="Events not found"
+        options={options}
+      />
     </section>
   );
 }

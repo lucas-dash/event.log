@@ -2,19 +2,25 @@ import {
   Options,
   getPaginatedFilteredEvents,
 } from "@/app/(main)/events/actions";
-import EventCard from "./event-card";
 import LoadMore from "./load-more";
 import EmptyState from "../empty-state";
+import EventCollection from "./event-collection";
+import { Badge } from "../ui/badge";
+import { Typography } from "../ui/typography";
 
-type EventInfiniteScrollProps = {
+type EventsInfiniteCollectionProps = {
+  label: string;
+  heading?: "h3" | "h4";
   emptyStateTitle: string;
   options?: Options;
 };
 
 export default async function EventsInfiniteCollection({
+  label,
+  heading = "h3",
   emptyStateTitle,
   options,
-}: EventInfiniteScrollProps) {
+}: EventsInfiniteCollectionProps) {
   const { data, error } = await getPaginatedFilteredEvents(1, options);
 
   if (error) throw new Error(error.message);
@@ -23,11 +29,15 @@ export default async function EventsInfiniteCollection({
 
   return (
     <>
-      <section className="grid md:grid-cols-2 gap-3">
-        {data?.map((event) => {
-          return <EventCard key={event.event_id} {...event} />;
-        })}
-      </section>
+      <Badge variant="section" className="mb-4">
+        <Typography
+          variant={heading}
+          className="text-primary-content capitalize"
+        >
+          {label}
+        </Typography>
+      </Badge>
+      <EventCollection data={data} />
       <LoadMore options={options} />
     </>
   );
