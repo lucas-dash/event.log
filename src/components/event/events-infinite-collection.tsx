@@ -25,7 +25,8 @@ export default async function EventsInfiniteCollection({
 
   if (error) throw new Error(error.message);
 
-  if (data.length === 0) return <EmptyState title={emptyStateTitle} />;
+  if (data.length === 0)
+    return <EmptyState title={emptyStateTitle} state="events" />;
 
   return (
     <>

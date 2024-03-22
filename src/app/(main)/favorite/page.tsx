@@ -21,7 +21,7 @@ export default async function Favorite() {
   if (favorite?.length === 0)
     return (
       <div className="flex items-center justify-center min-h-main">
-        <EmptyState title="No Favorite Events yet." />
+        <EmptyState title="No Favorite Events yet." state="favorites" />
       </div>
     );
 

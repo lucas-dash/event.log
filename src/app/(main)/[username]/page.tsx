@@ -29,7 +29,7 @@ export default async function UserProfile({
   if (!profile || error) {
     return (
       <div className="grid place-items-center min-h-main">
-        <EmptyState title="User not found" />
+        <EmptyState title="User not found" state="search" />
       </div>
     );
   }

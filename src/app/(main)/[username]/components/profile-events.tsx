@@ -9,7 +9,7 @@ export default async function ProfileEvents({ userId }: ProfileEventsProps) {
   const { data: events } = await listUserJoinedEvents(userId);
 
   if (events?.length === 0 || !events)
-    return <EmptyState title="No events Found" />;
+    return <EmptyState title="No events Found" state="events" />;
 
   return (
     <section className="py-8">

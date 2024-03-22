@@ -19,7 +19,7 @@ const badgeVariants = cva(
         section:
           "border-none bg-primary dark:bg-primary-dark text-primary-content text-base font-bold tracking-tight px-3 py-1",
         calendar:
-          "border-border bg-primary text-primary-content dark:bg-primary-dark dark:text-primary-content-dark rounded-lg px-3 text-sm font-bold dark:border-border-dark",
+          "border-border bg-primary text-primary-content shadow-base dark:bg-primary-dark dark:text-primary-content-dark dark:border-border-dark dark:shadow-base-dark rounded-lg px-3 text-sm font-bold",
       },
     },
     defaultVariants: {
