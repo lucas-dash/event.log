@@ -2,14 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { disconnectFromEvent, isJoinedByUser, joinEvent } from "@/lib/actions";
-import { CalendarCheck, CalendarPlus, Loader2 } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { CalendarCheck2, CalendarPlus, Loader2 } from "lucide-react";
+import { memo, useCallback, useEffect, useState, useTransition } from "react";
 
 type JoinButtonProps = {
   eventId: string;
   userId: string;
 };
-export default function JoinButton({ eventId, userId }: JoinButtonProps) {
+const JoinedButton = memo(function JoinButton({
+  eventId,
+  userId,
+}: JoinButtonProps) {
   const [joined, setJoined] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [loading, setLoading] = useState(false);
@@ -34,20 +37,21 @@ export default function JoinButton({ eventId, userId }: JoinButtonProps) {
     });
   };
 
-  useEffect(() => {
-    const checkIsJoined = async () => {
-      if (!userId) return;
-      setLoading(true);
-      const { data } = await isJoinedByUser(eventId, userId);
-      if (data) {
-        setJoined(true);
-      } else {
-        setJoined(false);
-      }
-      setLoading(false);
-    };
-    checkIsJoined();
+  const checkIsJoined = useCallback(async () => {
+    if (!userId) return;
+    setLoading(true);
+    const { data } = await isJoinedByUser(eventId, userId);
+    if (data) {
+      setJoined(true);
+    } else {
+      setJoined(false);
+    }
+    setLoading(false);
   }, [eventId, userId]);
+
+  useEffect(() => {
+    checkIsJoined();
+  }, [checkIsJoined]);
 
   if (!userId) return null;
 
@@ -63,8 +67,10 @@ export default function JoinButton({ eventId, userId }: JoinButtonProps) {
     >
       {isPending && <Loader2 className="animate-spin" />}
       <span className={`${isPending ? "hidden" : ""}`}>
-        {joined ? <CalendarCheck /> : <CalendarPlus />}
+        {joined ? <CalendarCheck2 /> : <CalendarPlus />}
       </span>
     </Button>
   );
-}
+});
+
+export default JoinedButton;

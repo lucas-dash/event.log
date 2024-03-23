@@ -11,6 +11,7 @@ type EventActionsProps = {
   orientation?: "vertical" | "horizontal";
   button?: "favorite" | "join" | "both";
 };
+
 export default function EventActions({
   event_id,
   orientation = "vertical",

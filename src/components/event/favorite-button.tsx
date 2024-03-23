@@ -4,13 +4,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Heart, Loader2 } from "lucide-react";
 import { isUserFavorite, addFavorite, removeFavorite } from "@/lib/actions";
-import { useEffect, useState, useTransition } from "react";
+import { memo, useCallback, useEffect, useState, useTransition } from "react";
 
 type FavoriteButtonProps = {
   eventId: string;
   userId: string;
 } & React.ComponentProps<typeof Button>;
-export default function FavoriteButton({
+
+const FavoriteButton = memo(function FavoriteButton({
   eventId,
   userId,
   className,
@@ -40,21 +41,21 @@ export default function FavoriteButton({
     });
   };
 
-  useEffect(() => {
-    const checkIsFavorite = async () => {
-      if (!userId) return;
-      setLoading(true);
+  const checkIsFavorite = useCallback(async () => {
+    if (!userId) return;
+    setLoading(true);
+    const { data } = await isUserFavorite(eventId, userId);
+    if (data) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+    setLoading(false);
+  }, [userId, eventId]);
 
-      const { data } = await isUserFavorite(eventId, userId);
-      if (data) {
-        setFavorite(true);
-      } else {
-        setFavorite(false);
-      }
-      setLoading(false);
-    };
+  useEffect(() => {
     checkIsFavorite();
-  }, [eventId, userId]);
+  }, [checkIsFavorite]);
 
   if (!userId) return null;
 
@@ -78,4 +79,6 @@ export default function FavoriteButton({
       )}
     </Button>
   );
-}
+});
+
+export default FavoriteButton;

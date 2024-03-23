@@ -23,7 +23,7 @@ const buttonVariants = cva(
         navlink:
           "bg-secondary-light text-secondary-content hover:bg-secondary-light hover:text-secondary-content dark:bg-secondary-dark dark:text-secondary-content dark:hover:bg-secondary-dark dark:hover:text-secondary-content",
         joined:
-          "bg-success/80 hover:bg-success/60 text-copy border border-success dark:border-success-dark dark:bg-success-dark/80 dark:hover:bg-success-dark/60",
+          "bg-success/80 hover:bg-success/60 text-copy border border-success dark:border-success-dark dark:bg-success-dark/90 dark:hover:bg-success-dark/70",
       },
       size: {
         default: "h-10 px-4 py-2",
