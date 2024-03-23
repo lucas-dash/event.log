@@ -79,7 +79,7 @@ export async function getEventCoverById(coverId: string) {
 
 // Favorite
 
-export async function getFavoriteEventsByUserId(userId: string) {
+export async function getFavoriteEventsIdByUserId(userId: string) {
   const supabase = createSupabaseServerClient();
 
   const { data: favorite, error: favoriteError } = await supabase
@@ -91,15 +91,9 @@ export async function getFavoriteEventsByUserId(userId: string) {
     throw new Error(favoriteError.message);
   }
 
-  const eventsId = favorite.map((fav) => fav.event_id);
+  const favoriteIds = favorite.map((fav) => fav.event_id);
 
-  const result = await supabase
-    .from("event")
-    .select("*")
-    .in("event_id", eventsId)
-    .order("date", { ascending: true });
-
-  return result;
+  return favoriteIds;
 }
 
 export async function addFavorite(event_id: string) {
@@ -142,33 +136,18 @@ export async function isUserFavorite(eventId: string, userId: string) {
 
 // Joined events
 
-export async function getJoinedEventsByUserId(userId: string) {
+export async function getJoinedEventIdsByUserId(userId: string) {
   const supabase = createSupabaseServerClient();
-  const result = await supabase
+  const { data, error } = await supabase
     .from("joined")
     .select("event_id")
     .eq("user_id", userId);
 
-  return result;
-}
+  if (error) throw new Error(error.message);
 
-export async function listUserJoinedEvents(userId: string) {
-  const supabase = createSupabaseServerClient();
+  const joinedIds = data.map((joined) => joined.event_id);
 
-  const { data: joined, error } = await getJoinedEventsByUserId(userId);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  const joinedEventsId = joined.map((ev) => ev.event_id);
-
-  const result = await supabase
-    .from("event")
-    .select("*")
-    .in("event_id", joinedEventsId);
-
-  return result;
+  return joinedIds;
 }
 
 export async function isJoinedByUser(event_id: string, user_id: string) {

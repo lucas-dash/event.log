@@ -18,13 +18,12 @@ export async function getPopularEvents() {
 
   if (favoriteError) throw new Error(favoriteError.message);
 
-  const eventIdCountMap = joined.reduce<Record<string, number>>(
-    (acc, event) => {
-      acc[event.event_id] = (acc[event.event_id] || 0) + 1;
-      return acc;
-    },
-    {},
-  );
+  const eventIdCountMap: Record<string, number> = {};
+
+  joined.forEach((event) => {
+    eventIdCountMap[event.event_id] =
+      (eventIdCountMap[event.event_id] || 0) + 1;
+  });
 
   favorite.forEach((event) => {
     eventIdCountMap[event.event_id] =
@@ -43,6 +42,7 @@ export type Options = {
   lessThan?: { cell: string; value: string };
   tagId?: string[];
   search?: { cell: string; value: string };
+  inEvents?: string[];
   not?: { cell: string; filter: string; value: string };
   byDate?: boolean;
   ascending?: true | false;
@@ -52,6 +52,7 @@ export async function getPaginatedFilteredEvents(
   page: number,
   options?: Options,
   pageLimit: number = 12,
+  getAll: boolean = false,
 ) {
   const supabase = createSupabaseServerClient();
 
@@ -62,15 +63,20 @@ export async function getPaginatedFilteredEvents(
     lessThan,
     tagId,
     search,
+    inEvents,
     not,
     byDate = true,
     ascending = true,
   } = options || {};
 
-  const start = (page - 1) * pageLimit;
-  const end = start + pageLimit - 1;
+  let query = supabase.from("event").select("*");
 
-  let query = supabase.from("event").select("*").range(start, end);
+  if (!getAll) {
+    const start = (page - 1) * pageLimit;
+    const end = start + pageLimit - 1;
+
+    query = query.range(start, end);
+  }
 
   if (popular) {
     const popularEventIds = await getPopularEvents();
@@ -93,6 +99,10 @@ export async function getPaginatedFilteredEvents(
 
   if (lessThan) {
     query = query.lt(lessThan.cell, lessThan.value);
+  }
+
+  if (inEvents) {
+    query = query.in("event_id", inEvents);
   }
 
   if (byDate) {

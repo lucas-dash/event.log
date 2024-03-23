@@ -34,11 +34,13 @@ type WithFilter = {
 type EventShowcaseCollectionProps = {
   label: string;
   heading?: "h3" | "h4";
+  getAll?: boolean;
 } & (WithFilter | WithoutFilter);
 
 export default async function EventShowcaseCollection({
   label,
   heading = "h3",
+  getAll = false,
   ...props
 }: EventShowcaseCollectionProps) {
   let filterEvents: EventType[] = [];
@@ -48,6 +50,7 @@ export default async function EventShowcaseCollection({
       1,
       props.options,
       4,
+      getAll,
     );
 
     if (data?.length === 0) return null;

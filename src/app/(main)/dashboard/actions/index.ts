@@ -1,21 +1,21 @@
 "use server";
 
-import { getFavoriteEventsByUserId } from "@/lib/actions";
+import { getFavoriteEventsIdByUserId } from "@/lib/actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function findSimilarEvents(userId: string, limit = 8) {
   const supabase = createSupabaseServerClient();
 
-  const { data: favorite, error: favoriteError } =
-    await getFavoriteEventsByUserId(userId);
+  const favoriteIds = await getFavoriteEventsIdByUserId(userId);
 
-  if (favoriteError) {
-    throw new Error(favoriteError.message);
-  }
+  const { data: favoriteEvents, error } = await supabase
+    .from("event")
+    .select()
+    .in("event_id", favoriteIds);
 
-  const favEventsId = favorite.map((fav) => fav.event_id);
+  if (error) throw new Error(error.message);
 
-  const preferenceTags = favorite
+  const preferenceTags = favoriteEvents
     .flatMap((event) => event.tags)
     .filter((tag, index, array) => array.indexOf(tag) === index);
 
@@ -29,7 +29,7 @@ export async function findSimilarEvents(userId: string, limit = 8) {
       "place, date, time, title, event_id, cover_id, price, isFree, price_from",
     )
     .or(preferenceQuery)
-    .not("event_id", "in", `(${favEventsId})`)
+    .not("event_id", "in", `(${favoriteIds})`)
     .not("cover_id", "is", null)
     .limit(limit);
 

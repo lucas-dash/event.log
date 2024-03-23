@@ -1,4 +1,4 @@
-import { getFavoriteEventsByUserId, getUser } from "@/lib/actions";
+import { getFavoriteEventsIdByUserId, getUser } from "@/lib/actions";
 import { redirect } from "next/navigation";
 import EmptyState from "@/components/empty-state";
 import { Metadata } from "next";
@@ -16,25 +16,26 @@ export default async function Favorite() {
     redirect("/auth/login");
   }
 
-  const { data: favorite, error } = await getFavoriteEventsByUserId(user.id);
+  const favoriteIds = await getFavoriteEventsIdByUserId(user.id);
 
-  if (favorite?.length === 0)
+  if (favoriteIds?.length === 0)
     return (
       <div className="flex items-center justify-center min-h-main">
         <EmptyState title="No Favorite Events yet." state="favorites" />
       </div>
     );
 
-  if (error) {
-    throw new Error(error?.message);
-  }
-
   return (
     <section className="py-10">
       <EventShowcaseCollection
         label="Favorite Events"
-        type="noFilter"
-        events={favorite}
+        type="filter"
+        options={{
+          inEvents: favoriteIds,
+          byDate: true,
+          ascending: true,
+        }}
+        getAll
       />
     </section>
   );
