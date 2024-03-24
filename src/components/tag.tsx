@@ -1,4 +1,4 @@
-import { TagType } from "@/lib/constants";
+import { TagType } from "@/lib/tags";
 import { cn } from "@/lib/utils";
 import { HTMLAttributes } from "react";
 import { Badge } from "./ui/badge";

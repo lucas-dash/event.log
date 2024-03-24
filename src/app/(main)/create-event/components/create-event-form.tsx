@@ -36,7 +36,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 
 import { format } from "date-fns";
-import { tags } from "@/lib/constants";
+import { tags } from "@/lib/tags";
 import SearchPlacesInput from "@/components/search-places-input";
 import Tag from "@/components/tag";
 import { createEvent } from "../actions";

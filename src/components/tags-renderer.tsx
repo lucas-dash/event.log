@@ -1,4 +1,4 @@
-import { tags } from "@/lib/constants";
+import { tags } from "@/lib/tags";
 import Link from "next/link";
 import Tag from "./tag";
 

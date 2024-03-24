@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { tags } from "@/lib/constants";
+import { tags } from "@/lib/tags";
 import EventsInfiniteCollection from "@/components/event/events-infinite-collection";
 
 type TagPageProps = {
@@ -30,6 +30,11 @@ export function generateMetadata({ params: { tagId } }: TagPageProps) {
 export default async function TagPage({ params: { tagId } }: TagPageProps) {
   const decodeTitle = decodeURIComponent(tagId);
 
+  const capitalizeDecodeTitle = decodeURIComponent(tagId).replace(
+    /\b\w/g,
+    (char) => char.toUpperCase(),
+  );
+
   const allTags = tags.find((tag) => tag.id === decodeTitle);
 
   if (!allTags) {
@@ -44,7 +49,7 @@ export default async function TagPage({ params: { tagId } }: TagPageProps) {
     <section className="py-10">
       <EventsInfiniteCollection
         label={`${decodeTitle} Category`}
-        emptyStateTitle={`There are no events in ${decodeTitle} Category yet`}
+        emptyStateTitle={`There are no events in ${capitalizeDecodeTitle} Category yet`}
         options={options}
       />
     </section>
