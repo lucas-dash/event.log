@@ -110,7 +110,10 @@ export async function getPaginatedFilteredEvents(
   }
 
   if (search) {
-    query = query.ilike(search.cell, `%${search.value}%`);
+    query = query.textSearch(search.cell, search.value, {
+      config: "english",
+      type: "websearch",
+    });
   }
 
   if (not) {
@@ -143,7 +146,6 @@ export async function getPaginatedEventsByMonth(
 ) {
   const supabase = createSupabaseServerClient();
 
-  // Calculate the date range for the requested page
   const currentDate = new Date();
   currentDate.setMonth(currentDate.getMonth() + (page - 1) * monthsPerPage);
   currentDate.setDate(1); // Start from the first day of the month
